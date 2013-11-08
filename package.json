@@ -1,0 +1,28 @@
+{
+	"homepage": "http://rockymadden.com/lti.js/",
+	"dependencies": {
+		"bilby": "0.0.x",
+		"q": "0.9.x",
+		"underscore": "1.4.x"
+	},
+	"description": "Purely functional library for interacting with Learning Tools Interoperability (LTI).",
+	"devDependencies": {
+		"coffee-script": "1.6.x",
+		"grunt": "0.4.x",
+		"grunt-cli": "0.1.9",
+		"grunt-cafe-mocha": "0.1.x",
+		"grunt-contrib-coffee": "0.7.x",
+		"grunt-contrib-copy": "0.4.x",
+		"mocha": "1.11.x",
+		"should": "1.2.x"
+	},
+	"name": "lti",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/rockymadden/lti.js.git"
+	},
+	"scripts": {
+		"prepublish": "grunt"
+	},
+	"version": "0.0.0"
+}
