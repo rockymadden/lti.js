@@ -1,5 +1,5 @@
 #lti.js
-Purely functional library for interacting with Learning Tools Interoperability (LTI).
+Functional library for interacting with Learning Tools Interoperability (LTI).
 
 
 
