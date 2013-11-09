@@ -2,9 +2,9 @@ bilby = require('bilby')
 oauthsign = require('oauth-sign')
 _ = require('underscore')
 
-oauth = bilby.environment()
+consumer = bilby.environment()
 	.property('configuration', {oauth_consumer_key: null, oauth_consumer_secret: null})
-	.property('base64', '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+	.property('nonceChars', '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
 	.method('apply',
 		((url, parameters) ->
 			bilby.isString(url) and
@@ -43,7 +43,7 @@ oauth = bilby.environment()
 	)
 	.method('nonce', (-> true), (->
 		self = @
-		_.map([0..31], -> self.base64[Math.floor(Math.random() * self.base64.length)]).join('')
+		_.map([0..31], -> self.nonceChars[Math.floor(Math.random() * self.nonceChars.length)]).join('')
 	))
 
 module.exports = oauth
