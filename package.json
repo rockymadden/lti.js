@@ -2,6 +2,7 @@
 	"homepage": "http://rockymadden.com/lti.js/",
 	"dependencies": {
 		"bilby": "0.0.x",
+		"oauth-sign": "0.4.x",
 		"q": "0.9.x",
 		"underscore": "1.4.x"
 	},
@@ -16,6 +17,7 @@
 		"mocha": "1.11.x",
 		"should": "1.2.x"
 	},
+	"main": "build/lti.js",
 	"name": "lti",
 	"repository": {
 		"type": "git",

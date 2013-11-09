@@ -19,3 +19,4 @@
 
 # Project ignores.
 /node_modules
+*.config.json
