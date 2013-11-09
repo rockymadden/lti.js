@@ -1,5 +1,5 @@
 should = require('should')
-oauth = require('./oauth').property('configuration', {oauth_consumer_key: 'abc', oauth_consumer_secret: 'xyz'})
+oauth = require('./oauth').property('consumerKey', 'abc').property('consumerSecret', 'xyz')
 _ = require('underscore')
 
 describe('oauth', ->
