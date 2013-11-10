@@ -11,7 +11,7 @@ _ = require('underscore')
 
 describe('toolconsumer', ->
 	describe('#basicRequest()', ->
-		it('should return a random 32-digit hexidecimal string', (done) ->
+		it('should return an option monad holding the response', (done) ->
 			formParams =
 				lti_message_type: 'basic-lti-launch-request'
 				lti_version: 'LTI-1p0'

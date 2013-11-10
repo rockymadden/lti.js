@@ -24,7 +24,7 @@ describe('oauth', ->
 		)
 	)
 	describe('#authorization()', ->
-		it('should return a map containing all oauth and original parameters', ->
+		it('should return a map containing all oauth parameters', ->
 			auth = oauth.authorization('url', {}, 'key', 'secret')
 
 			_.has(auth, 'lti_version').should.be.false
@@ -32,7 +32,7 @@ describe('oauth', ->
 		)
 	)
 	describe('#stringify()', ->
-		it('should return a string representation of an authorization', ->
+		it('should return a string representation of an authorization for use in an http header', ->
 			oauth.stringify(
 				oauth.authorization('url', {}, 'key', 'secret')
 			).indexOf('oauth_consumer_key="key",oauth_nonce="').should.equal(0)
