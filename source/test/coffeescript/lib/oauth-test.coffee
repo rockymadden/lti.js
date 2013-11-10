@@ -1,5 +1,5 @@
 should = require('should')
-oauth = require('./oauth').property('consumerKey', 'abc').property('consumerSecret', 'xyz')
+oauth = require('./oauth')
 _ = require('underscore')
 
 describe('oauth', ->
@@ -13,26 +13,29 @@ describe('oauth', ->
 	describe('#sign()', ->
 		it('should return a signature', ->
 			params =
-				oauth_callback: 'about:blank'
 				oauth_consumer_key: 'oauth_consumer_key'
 				oauth_nonce: oauth.nonce()
 				oauth_signature_method: 'HMAC-SHA1'
 				oauth_timestamp: Date.now()
 				oauth_version: '1.0'
 
-			oauth.sign('url', params).should.not.be.null
-			oauth.sign('url', params).should.equal(oauth.sign('url', params))
+			oauth.sign('url', params, 'secret').should.not.be.null
+			oauth.sign('url', params, 'secret').should.equal(oauth.sign('url', params, 'secret'))
 		)
 	)
-	describe('#apply()', ->
+	describe('#authorization()', ->
 		it('should return a map containing all oauth and original parameters', ->
-			params =
-				lti_message_type: 'basic-lti-launch-request'
-				lti_version: 'LTI-1p0'
-			applied = oauth.apply('url', params)
+			auth = oauth.authorization('url', {}, 'key', 'secret')
 
-			_.has(applied, 'lti_version').should.be.true
-			_.has(applied, 'oauth_signature').should.be.true
+			_.has(auth, 'lti_version').should.be.false
+			_.has(auth, 'oauth_signature').should.be.true
+		)
+	)
+	describe('#stringify()', ->
+		it('should return a string representation of an authorization', ->
+			oauth.stringify(
+				oauth.authorization('url', {}, 'key', 'secret')
+			).indexOf('oauth_consumer_key="key",oauth_nonce="').should.equal(0)
 		)
 	)
 )

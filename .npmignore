@@ -1,3 +1,19 @@
-docs
-node_modules
-npm-debug.log
+# Core ignores.
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+*#
+.git/
+
+# OS ignores.
+.DS_Store
+
+# Project ignores.
+/node_modules
+*.config.json
