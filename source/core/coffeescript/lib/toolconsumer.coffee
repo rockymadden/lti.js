@@ -9,18 +9,17 @@ toolconsumer = bilby.environment()
 	.property('consumerKey', null)
 	.property('consumerSecret', null)
 	.property('host', null)
-	.property('path', null)
 	.property('port', null)
 	.method('basicRequest',
-		((formParameters, urlParameters) ->
-			formParameters? and typeof formParameters is 'object' and
+		((path, formParameters, urlParameters) ->
+			path? and typeof path is 'string' and formParameters? and typeof formParameters is 'object' and
 			_.has(formParameters, 'lti_message_type') and _.has(formParameters, 'lti_version') and
 			typeof urlParameters is 'object'
 		),
-		((formParameters, urlParameters) ->
+		((path, formParameters, urlParameters) ->
 			deferred = q.defer()
 
-			url = (if @port is 443 then 'https://' else 'http://') + @host + @path
+			url = (if @port is 443 then 'https://' else 'http://') + @host + path
 			content = _.map(formParameters, (v, k) ->
 				encodeURIComponent(k) + '=' + encodeURIComponent(v.toString())
 			).join('&')
@@ -40,7 +39,7 @@ toolconsumer = bilby.environment()
 					'Host': @host
 				host: @host
 				method: 'POST'
-				path: @path
+				path: path
 				port: @port
 			request = http.request(options, (response) ->
 				data = ''
