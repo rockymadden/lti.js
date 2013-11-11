@@ -1,12 +1,26 @@
 #lti.js
 Functional library for interacting with Learning Tools Interoperability (LTI).
 
+## Depending Upon
+The project is available on the [Node Packaged Modules registry](https://npmjs.org/package/lti). Add the dependency in your package.json file:
 
+```javascript
+"dependencies": {
+	"lti": "0.0.x"
+}
+```
+
+## Building
+```shell
+npm install
+grunt
+```
 
 ## License
+```
 The MIT License (MIT)
 
-Copyright (c) 2013 Rocky Madden
+Copyright (c) 2013 Rocky Madden (http://rockymadden.com/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,3 +39,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+```
