@@ -6,7 +6,7 @@
 		"q": "0.9.x",
 		"underscore": "1.4.x"
 	},
-	"description": "Functional library for interacting with Learning Tools Interoperability (LTI).",
+	"description": "Functional library for interacting, via server-to-server communications, with Learning Tools Interoperability (LTI) tool providers.",
 	"devDependencies": {
 		"coffee-script": "1.6.x",
 		"grunt": "0.4.x",
