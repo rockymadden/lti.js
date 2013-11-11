@@ -5,10 +5,7 @@ _ = require('underscore')
 oauth = bilby.environment()
 	.property('base64', '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
 	.method('authorization',
-		((url, parameters, consumerKey, consumerSecret) ->
-			bilby.isString(url) and parameters? and typeof parameters is 'object' and
-			consumerKey? and bilby.isString(consumerKey) and consumerSecret? and bilby.isString(consumerSecret)
-		),
+		((url, parameters, consumerKey, consumerSecret) -> url? and parameters? and consumerKey? and consumerSecret?),
 		((url, parameters, consumerKey, consumerSecret) ->
 			oauthParameters =
 				oauth_callback: 'oob'
@@ -18,10 +15,14 @@ oauth = bilby.environment()
 				oauth_timestamp: Date.now()
 				oauth_version: '1.0'
 
-			bilby.extend(
-				oauthParameters,
-				oauth_signature: @sign(url, bilby.extend(parameters, oauthParameters), consumerSecret)
-			)
+			bilby.environment()
+				.property('oauth_callback', oauthParameters.oauth_callback)
+				.property('oauth_consumer_key', oauthParameters.oauth_consumer_key)
+				.property('oauth_nonce', oauthParameters.oauth_nonce)
+				.property('oauth_signature', @sign(url, bilby.extend(parameters, oauthParameters), consumerSecret))
+				.property('oauth_signature_method', oauthParameters.oauth_signature_method)
+				.property('oauth_timestamp', oauthParameters.oauth_timestamp)
+				.property('oauth_version', oauthParameters.oauth_version)
 		)
 	)
 	.method('nonce', (-> true), (->
@@ -30,11 +31,10 @@ oauth = bilby.environment()
 	))
 	.method('sign',
 		((url, parameters, consumerSecret) ->
-			bilby.isString(url) and parameters? and typeof parameters is 'object' and
+			url? and parameters? and consumerSecret? and
 			_.has(parameters, 'oauth_callback') and _.has(parameters, 'oauth_consumer_key') and
 			_.has(parameters, 'oauth_nonce') and _.has(parameters, 'oauth_timestamp') and
-			_.has(parameters, 'oauth_signature_method') and _.has(parameters, 'oauth_version') and
-			consumerSecret? and bilby.isString(consumerSecret)
+			_.has(parameters, 'oauth_signature_method') and _.has(parameters, 'oauth_version')
 		),
 		((url, parameters, consumerSecret) -> switch parameters.oauth_signature_method
 			when 'HMAC-SHA1'
@@ -44,13 +44,19 @@ oauth = bilby.environment()
 	)
 	.method('stringify',
 		((authorization) ->
-			authorization? and typeof authorization is 'object' and Object.keys(authorization).length is 7 and
+			authorization? and
 			_.has(authorization, 'oauth_callback') and _.has(authorization, 'oauth_consumer_key') and
 			_.has(authorization, 'oauth_nonce') and _.has(authorization, 'oauth_timestamp') and
 			_.has(authorization, 'oauth_signature') and _.has(authorization, 'oauth_signature_method') and
 			_.has(authorization, 'oauth_version')
 		),
-		((authorization) -> _.map(authorization, (v, k) -> k + '="' + encodeURIComponent(v.toString()) + '"').join(','))
+		((authorization) ->
+			_.chain(authorization)
+				.map((v, k) -> k + '="' + encodeURIComponent(v.toString()) + '"')
+				.filter((i) -> i.indexOf('oauth_') != -1)
+				.value()
+				.join(',')
+		)
 	)
 
 module.exports = oauth

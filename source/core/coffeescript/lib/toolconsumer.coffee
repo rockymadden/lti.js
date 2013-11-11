@@ -6,20 +6,15 @@ _ = require('underscore')
 
 # Adheres to LTIv1-12.
 toolconsumer = bilby.environment()
-	.property('consumerKey', null)
-	.property('consumerSecret', null)
-	.property('host', null)
-	.property('port', null)
 	.method('basicRequest',
-		((path, formParameters, urlParameters) ->
-			path? and typeof path is 'string' and formParameters? and typeof formParameters is 'object' and
-			_.has(formParameters, 'lti_message_type') and _.has(formParameters, 'lti_version') and
-			typeof urlParameters is 'object'
+		((toolcontext, formParameters, urlParameters) ->
+			toolcontext? and formParameters? and
+			_.has(formParameters, 'lti_message_type') and _.has(formParameters, 'lti_version')
 		),
-		((path, formParameters, urlParameters) ->
+		((toolcontext, formParameters, urlParameters) ->
 			deferred = q.defer()
 
-			url = (if @port is 443 then 'https://' else 'http://') + @host + path
+			url = (if toolcontext.port is 443 then 'https://' else 'http://') + toolcontext.host + toolcontext.path
 			content = _.map(formParameters, (v, k) ->
 				encodeURIComponent(k) + '=' + encodeURIComponent(v.toString())
 			).join('&')
@@ -30,17 +25,17 @@ toolconsumer = bilby.environment()
 						oauth.authorization(
 							url,
 							bilby.extend(formParameters, (if urlParameters? then urlParameters else {})),
-							@consumerKey,
-							@consumerSecret
+							toolcontext.consumerKey,
+							toolcontext.consumerSecret
 						)
 					)
 					'Content-Type': 'application/x-www-form-urlencoded'
 					'Content-Length': content.length
-					'Host': @host
-				host: @host
+					'Host': toolcontext.host
+				host: toolcontext.host
 				method: 'POST'
-				path: path
-				port: @port
+				path: toolcontext.path
+				port: toolcontext.port
 			request = http.request(options, (response) ->
 				data = ''
 

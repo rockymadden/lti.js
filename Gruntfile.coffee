@@ -5,6 +5,7 @@ module.exports = (grunt) ->
 			core: files: [
 				'build/lib/oauth.js': 'source/core/coffeescript/lib/oauth.coffee'
 				'build/lib/toolconsumer.js': 'source/core/coffeescript/lib/toolconsumer.coffee'
+				'build/lib/toolcontext.js': 'source/core/coffeescript/lib/toolcontext.coffee'
 			]
 			test: files: [
 				'build/lib/oauth-test.js': 'source/test/coffeescript/lib/oauth-test.coffee'
