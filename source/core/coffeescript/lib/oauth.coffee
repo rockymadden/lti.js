@@ -11,6 +11,7 @@ oauth = bilby.environment()
 		),
 		((url, parameters, consumerKey, consumerSecret) ->
 			oauthParameters =
+				oauth_callback: 'oob'
 				oauth_consumer_key: consumerKey
 				oauth_nonce: @nonce()
 				oauth_signature_method: 'HMAC-SHA1'
@@ -30,9 +31,10 @@ oauth = bilby.environment()
 	.method('sign',
 		((url, parameters, consumerSecret) ->
 			bilby.isString(url) and parameters? and typeof parameters is 'object' and
-			_.has(parameters, 'oauth_consumer_key') and _.has(parameters, 'oauth_nonce') and
-			_.has(parameters, 'oauth_timestamp') and _.has(parameters, 'oauth_signature_method') and
-			_.has(parameters, 'oauth_version') and consumerSecret? and bilby.isString(consumerSecret)
+			_.has(parameters, 'oauth_callback') and _.has(parameters, 'oauth_consumer_key') and
+			_.has(parameters, 'oauth_nonce') and _.has(parameters, 'oauth_timestamp') and
+			_.has(parameters, 'oauth_signature_method') and _.has(parameters, 'oauth_version') and
+			consumerSecret? and bilby.isString(consumerSecret)
 		),
 		((url, parameters, consumerSecret) -> switch parameters.oauth_signature_method
 			when 'HMAC-SHA1'
@@ -42,10 +44,11 @@ oauth = bilby.environment()
 	)
 	.method('stringify',
 		((authorization) ->
-			authorization? and typeof authorization is 'object' and Object.keys(authorization).length is 6 and
-			_.has(authorization, 'oauth_consumer_key') and _.has(authorization, 'oauth_nonce') and
-			_.has(authorization, 'oauth_timestamp') and _.has(authorization, 'oauth_signature') and
-			_.has(authorization, 'oauth_signature_method') and _.has(authorization, 'oauth_version')
+			authorization? and typeof authorization is 'object' and Object.keys(authorization).length is 7 and
+			_.has(authorization, 'oauth_callback') and _.has(authorization, 'oauth_consumer_key') and
+			_.has(authorization, 'oauth_nonce') and _.has(authorization, 'oauth_timestamp') and
+			_.has(authorization, 'oauth_signature') and _.has(authorization, 'oauth_signature_method') and
+			_.has(authorization, 'oauth_version')
 		),
 		((authorization) -> _.map(authorization, (v, k) -> k + '="' + encodeURIComponent(v.toString()) + '"').join(','))
 	)

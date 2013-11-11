@@ -13,6 +13,7 @@ describe('oauth', ->
 	describe('#sign()', ->
 		it('should return a signature', ->
 			params =
+				oauth_callback: 'oob'
 				oauth_consumer_key: 'oauth_consumer_key'
 				oauth_nonce: oauth.nonce()
 				oauth_signature_method: 'HMAC-SHA1'
@@ -35,7 +36,7 @@ describe('oauth', ->
 		it('should return a string representation of an authorization for use in an http header', ->
 			oauth.stringify(
 				oauth.authorization('url', {}, 'key', 'secret')
-			).indexOf('oauth_consumer_key="key",oauth_nonce="').should.equal(0)
+			).indexOf('oauth_callback="oob",oauth_consumer_key="key",oauth_nonce="').should.equal(0)
 		)
 	)
 )
