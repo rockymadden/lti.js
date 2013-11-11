@@ -1,9 +1,6 @@
 #lti.js
 Functional library for interacting, via server-to-server communications, with Learning Tools Interoperability (LTI) tool providers.
 
-## Supported
-Tool consumers falling under the LTIv1-12 use case.
-
 ## Depending Upon
 The project is available on the [Node Packaged Modules registry](https://npmjs.org/package/lti). Add the dependency in your package.json file:
 
