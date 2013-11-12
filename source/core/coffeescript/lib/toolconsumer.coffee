@@ -30,6 +30,7 @@ toolconsumer = bilby.environment()
 			options =
 				headers:
 					'Accept': '*/*'
+					'Authorization': oauth.stringify(authorization)
 					'Connection': 'close'
 					'Content-Type': 'application/x-www-form-urlencoded'
 					'Content-Length': content.length
