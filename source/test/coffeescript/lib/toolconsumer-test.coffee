@@ -18,7 +18,7 @@ describe('toolconsumer', ->
 				.property('path', config.path)
 				.property('port', config.port)
 
-			toolconsumer.basicRequest(context, formParams, {}).then((response) ->
+			toolconsumer.request(context, formParams, {}).then((response) ->
 				console.dir(response.getOrElse('')) # TODO: Not currently working with netTrekker.
 				done()
 			)

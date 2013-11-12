@@ -2,10 +2,6 @@ bilby = require('bilby')
 _ = require('underscore')
 
 encode = bilby.environment()
-	.method('httpPostData',
-		((map) -> map?),
-		((map) -> _.map(map, (v, k) -> encodeURIComponent(k) + '=' + encodeURIComponent(v.toString())).join('&'))
-	)
 	.method('httpAuthorizationHeader',
 		((authorization) ->
 			authorization? and
@@ -22,6 +18,9 @@ encode = bilby.environment()
 				.join(',')
 		)
 	)
-
+	.method('httpPostData',
+		((map) -> map?),
+		((map) -> _.map(map, (v, k) -> encodeURIComponent(k) + '=' + encodeURIComponent(v.toString())).join('&'))
+	)
 
 module.exports = encode

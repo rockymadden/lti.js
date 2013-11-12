@@ -7,7 +7,7 @@ _ = require('underscore')
 
 # Adheres to LTIv1-12.
 toolconsumer = bilby.environment()
-	.method('basicRequest',
+	.method('request',
 		((toolcontext, formParameters, urlParameters) ->
 			toolcontext? and formParameters? and
 			_.has(formParameters, 'lti_message_type') and
