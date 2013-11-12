@@ -1,4 +1,5 @@
 bilby = require('bilby')
+encode = require('./encode')
 http = require('http')
 oauth = require('./oauth')
 q = require('q')
@@ -23,15 +24,12 @@ toolconsumer = bilby.environment()
 				toolcontext.consumerKey,
 				toolcontext.consumerSecret
 			)
-			content = _.map(
-				# Vendors don't seem to honor OAuth 5.2 bullet 1, so toss the parameters in the post data as well.
-				bilby.extend(formParameters, authorization),
-				(v, k) -> encodeURIComponent(k) + '=' + encodeURIComponent(v.toString())
-			).join('&')
+			# Vendors don't seem to honor OAuth 5.2 bullet 1, so toss the parameters in the post data as well.
+			content = encode.httpPostData(bilby.extend(formParameters, authorization))
 			options =
 				headers:
 					'Accept': '*/*'
-					'Authorization': oauth.stringify(authorization)
+					'Authorization': encode.httpAuthorizationHeader(authorization)
 					'Connection': 'close'
 					'Content-Type': 'application/x-www-form-urlencoded'
 					'Content-Length': content.length

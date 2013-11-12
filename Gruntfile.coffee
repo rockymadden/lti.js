@@ -3,11 +3,13 @@ module.exports = (grunt) ->
 		pkg: grunt.file.readJSON 'package.json'
 		coffee:
 			core: files: [
+				'build/lib/encode.js': 'source/core/coffeescript/lib/encode.coffee'
 				'build/lib/oauth.js': 'source/core/coffeescript/lib/oauth.coffee'
 				'build/lib/toolconsumer.js': 'source/core/coffeescript/lib/toolconsumer.coffee'
 				'build/lib/toolcontext.js': 'source/core/coffeescript/lib/toolcontext.coffee'
 			]
 			test: files: [
+				'build/lib/encode-test.js': 'source/test/coffeescript/lib/encode-test.coffee'
 				'build/lib/oauth-test.js': 'source/test/coffeescript/lib/oauth-test.coffee'
 				'build/lib/toolconsumer-test.js': 'source/test/coffeescript/lib/toolconsumer-test.coffee'
 				'build/lib/toolcontext-test.js': 'source/test/coffeescript/lib/toolcontext-test.coffee'

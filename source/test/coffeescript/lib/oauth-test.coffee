@@ -33,11 +33,4 @@ describe('oauth', ->
 			_.has(auth, 'oauth_signature').should.be.true
 		)
 	)
-	describe('stringify()', ->
-		it('should return a string representation of an authorization for use in an http header', ->
-			oauth.stringify(
-				oauth.authorization('url', {}, 'key', 'secret')
-			).indexOf('oauth_callback="oob",oauth_consumer_key="key",oauth_nonce="').should.equal(0)
-		)
-	)
 )
