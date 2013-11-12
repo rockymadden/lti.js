@@ -10,6 +10,7 @@ describe('toolconsumer', ->
 			formParams =
 				lti_message_type: 'basic-lti-launch-request'
 				lti_version: 'LTI-1p0'
+				resource_link_id: '429785226'
 			context = require('./toolcontext')
 				.property('consumerKey', config.consumerKey)
 				.property('consumerSecret', config.consumerSecret)
@@ -18,7 +19,7 @@ describe('toolconsumer', ->
 				.property('port', config.port)
 
 			toolconsumer.basicRequest(context, formParams, {}).then((response) ->
-				response.getOrElse('') # TODO: Not currently working with netTrekker.
+				console.dir(response.getOrElse('')) # TODO: Not currently working with netTrekker.
 				done()
 			)
 		)
