@@ -24,6 +24,7 @@ toolconsumer = bilby.environment()
 				toolcontext.consumerSecret
 			)
 			content = _.map(
+				# Vendors don't seem to honor OAuth 5.2 bullet 1, so toss the parameters in the post data as well.
 				bilby.extend(formParameters, authorization),
 				(v, k) -> encodeURIComponent(k) + '=' + encodeURIComponent(v.toString())
 			).join('&')
