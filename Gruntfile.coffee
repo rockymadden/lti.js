@@ -10,6 +10,7 @@ module.exports = (grunt) ->
 			test: files: [
 				'build/lib/oauth-test.js': 'source/test/coffeescript/lib/oauth-test.coffee'
 				'build/lib/toolconsumer-test.js': 'source/test/coffeescript/lib/toolconsumer-test.coffee'
+				'build/lib/toolcontext-test.js': 'source/test/coffeescript/lib/toolcontext-test.coffee'
 			]
 		copy:
 			test: files: ['build/etc/toolconsumer.config.json': 'resource/test/json/etc/toolconsumer.config.json']

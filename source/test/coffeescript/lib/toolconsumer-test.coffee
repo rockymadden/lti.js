@@ -5,12 +5,11 @@ toolconsumer = require('./toolconsumer')
 _ = require('underscore')
 
 describe('toolconsumer', ->
-	describe('#basicRequest()', ->
+	describe('basicRequest()', ->
 		it('should return an option monad holding the response', (done) ->
 			formParams =
 				lti_message_type: 'basic-lti-launch-request'
 				lti_version: 'LTI-1p0'
-
 			context = require('./toolcontext')
 				.property('consumerKey', config.consumerKey)
 				.property('consumerSecret', config.consumerSecret)
@@ -19,7 +18,7 @@ describe('toolconsumer', ->
 				.property('port', config.port)
 
 			toolconsumer.basicRequest(context, formParams, {}).then((response) ->
-				console.dir response.getOrElse('') # TODO: Not currently working with netTrekker.
+				response.getOrElse('') # TODO: Not currently working with netTrekker.
 				done()
 			)
 		)
