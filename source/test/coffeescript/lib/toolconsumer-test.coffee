@@ -18,7 +18,7 @@ describe('toolconsumer', ->
 				.property('path', config.path)
 				.property('port', config.port)
 
-			toolconsumer.request(context, formParams, {}).then((response) ->
+			toolconsumer.request(context, formParams).then((response) ->
 				response.isSome.should.be.true
 				done()
 			)
