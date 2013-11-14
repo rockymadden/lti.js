@@ -18,12 +18,13 @@ grunt
 
 ## Using
 ```coffeescript
-# Create tool context. This may change per request, depending upon your
-# usage (e.g. if a different URL is needed each request). This is not
-# common, as most parameters are specified in the post data itself. If
-# new contexts are needed, create a new immutable context based off of
-# a core context. This will provide lens-like behavior in which you
-# only need to change what is different between the two (e.g. path).
+# Tool contexts are immutable structures made up of the consumer key,
+# consumer secret, host, path, port, and optionally a UTC offset. It is
+# unusual for contexts to change per request, but it is possible depending
+# upon the tool provider. If new contexts are needed, create a core context.
+# This will provide lens-like behavior in which new contexts only need to
+# change what is different. See http://bilby.brianmckenna.org/#environment
+# for more information.
 context = toolcontext
 	.property('consumerKey', 'consumerKey')
 	.property('consumerSecret', 'consumerSecret')
@@ -31,15 +32,21 @@ context = toolcontext
 	.property('path', '/lti')
 	.property('port', 443)
 
-# Create your post data parameters. 
-params =
+# Post data parameters, these do typically change per request. At minimum,
+# the three key value pairs below are required for LTI requests.
+formParams =
 	lti_message_type: 'basic-lti-launch-request'
 	lti_version: 'LTI-1p0'
 	resource_link_id: '1234567890'
+	
+# URL parameters, if any. This is an optional argument for requests.
+urlParams = null
 
-# Issue one or more requests and handle the response(s). The response
-# returned is a promise containing an option monad.
-toolconsumer.request(context, params).then((response) ->
+# Issue one or more requests and handle the response(s). Responses returned
+# are asynchronous promises. Each contains an option monad. See
+# https://github.com/kriskowal/q and http://bilby.brianmckenna.org/#option
+# for more information.
+toolconsumer.request(context, formParams).then((response) ->
 	response.map((r) -> console.dir(r))
 )
 ```
