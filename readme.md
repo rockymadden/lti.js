@@ -6,7 +6,7 @@ The project is available on the [Node Packaged Modules registry](https://npmjs.o
 
 ```javascript
 "dependencies": {
-	"lti": "0.0.x"
+	"lti": "0.1.x"
 }
 ```
 
