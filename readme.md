@@ -1,4 +1,4 @@
-#lti.js
+#lti.js [![Build Status](https://travis-ci.org/rockymadden/lti.js.png?branch=master)](http://travis-ci.org/rockymadden/lti.js)
 Functional library for interacting, via server-to-server communications, with Learning Tools Interoperability (LTI) tool providers.
 
 ## Depending
