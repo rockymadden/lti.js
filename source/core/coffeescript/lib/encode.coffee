@@ -18,7 +18,7 @@ encode = bilby.environment()
 				.join(',')
 		)
 	)
-	.method('httpPostData',
+	.method('url',
 		((map) -> map?),
 		((map) -> _.map(map, (v, k) -> encodeURIComponent(k) + '=' + encodeURIComponent(v.toString())).join('&'))
 	)

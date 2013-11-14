@@ -30,7 +30,7 @@ toolconsumer = bilby.environment()
 				)
 			# Many vendors don't seem to honor OAuth 1.0A section 5.2 bullet 1. Toss the parameters in the post data
 			# instead of the authorization header.
-			content = encode.httpPostData(bilby.extend(formParameters, authorization))
+			content = encode.url(bilby.extend(formParameters, authorization))
 			options =
 				headers:
 					'Accept': '*/*'
@@ -41,7 +41,7 @@ toolconsumer = bilby.environment()
 					'User-Agent': 'lti.js'
 				host: toolcontext.host
 				method: 'POST'
-				path: toolcontext.path + if urlParameters? then '?' + encode.httpPostData(urlParameters) else ''
+				path: toolcontext.path + if urlParameters? then '?' + encode.url(urlParameters) else ''
 				port: toolcontext.port
 			request = http.request(options, (response) ->
 				data = ''

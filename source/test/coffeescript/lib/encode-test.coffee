@@ -10,9 +10,9 @@ describe('encode', ->
 			).indexOf('oauth_callback="oob",oauth_consumer_key="key",oauth_nonce="').should.equal(0)
 		)
 	)
-	describe('httpPostData()', ->
-		it('should return a string representation of a map fit for post data', ->
-			encode.httpPostData(
+	describe('url()', ->
+		it('should return a string representation of a map fit for a url and post data', ->
+			encode.url(
 				test1: 'test1'
 				test2: 'test2'
 			).indexOf('test1=test1&test2=test2').should.equal(0)
