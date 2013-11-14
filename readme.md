@@ -18,10 +18,12 @@ grunt
 
 ## Using
 ```coffeescript
-params =
-	lti_message_type: 'basic-lti-launch-request'
-	lti_version: 'LTI-1p0'
-	resource_link_id: '1234567890'
+# Create tool context. This may change per request, depending upon your
+# usage (e.g. if a different URL is needed each request). This is not
+# common, as most parameters are specified in the post data itself. If
+# new contexts are needed, create a new immutable context based off of
+# a core context. This will provide lens-like behavior in which you
+# only need to change what is different between the two (e.g. path).
 context = toolcontext
 	.property('consumerKey', 'consumerKey')
 	.property('consumerSecret', 'consumerSecret')
@@ -29,6 +31,14 @@ context = toolcontext
 	.property('path', '/lti')
 	.property('port', 443)
 
+# Create your post data parameters. 
+params =
+	lti_message_type: 'basic-lti-launch-request'
+	lti_version: 'LTI-1p0'
+	resource_link_id: '1234567890'
+
+# Issue one or more requests and handle the response(s). The response
+# returned is a promise containing an option monad.
 toolconsumer.request(context, params).then((response) ->
 	console.dir(response)
 )
