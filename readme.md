@@ -25,6 +25,7 @@ grunt
 # are needed, create a base context. This will provide lens-like behavior
 # in which new contexts only need to specify what is different. See
 # http://bilby.brianmckenna.org/#environment for more information.
+context = toolcontext
 	.property('consumerKey', 'consumerKey')
 	.property('consumerSecret', 'consumerSecret')
 	.property('host', 'example.com')
