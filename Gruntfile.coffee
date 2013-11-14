@@ -3,27 +3,33 @@ module.exports = (grunt) ->
 		pkg: grunt.file.readJSON 'package.json'
 		coffee:
 			core: files: [
-				'build/lib/encode.js': 'source/core/coffeescript/lib/encode.coffee'
-				'build/lib/oauth.js': 'source/core/coffeescript/lib/oauth.coffee'
-				'build/lib/toolconsumer.js': 'source/core/coffeescript/lib/toolconsumer.coffee'
-				'build/lib/toolcontext.js': 'source/core/coffeescript/lib/toolcontext.coffee'
+				expand: true
+				cwd: 'source/core/coffeescript/lib/'
+				src: ['**/*.coffee']
+				dest: 'build/lib/'
+				ext: '.js'
 			]
 			test: files: [
-				'build/lib/encode-test.js': 'source/test/coffeescript/lib/encode-test.coffee'
-				'build/lib/oauth-test.js': 'source/test/coffeescript/lib/oauth-test.coffee'
-				'build/lib/toolconsumer-test.js': 'source/test/coffeescript/lib/toolconsumer-test.coffee'
-				'build/lib/toolcontext-test.js': 'source/test/coffeescript/lib/toolcontext-test.coffee'
+				expand: true
+				cwd: 'source/test/coffeescript/lib/'
+				src: ['**/*.coffee']
+				dest: 'build/lib/'
+				ext: '.js'
 			]
-		copy:
-			test: files: ['build/etc/toolconsumer.config.json': 'resource/test/json/etc/toolconsumer.config.json']
-		cafemocha: all:
-			src: 'build/**/*-test.js'
-			options: timeout: 512000
+		copy: test: files: ['build/etc/toolconsumer.config.json': 'resource/test/json/etc/toolconsumer.config.json']
+		cafemocha:
+			all: src: ['build/**/*-test.js']
+			travis: src: [
+				'build/lib/encode-test.js'
+				'build/lib/oauth-test.js'
+				'build/lib/toolcontext-test.js'
+			]
 
 	grunt.loadNpmTasks('grunt-cafe-mocha')
 	grunt.loadNpmTasks('grunt-contrib-coffee')
 	grunt.loadNpmTasks('grunt-contrib-copy')
 
 	grunt.registerTask('default', ['coffee', 'copy'])
-	grunt.registerTask('test', ['default', 'cafemocha'])
+	grunt.registerTask('test', ['default', 'cafemocha:all'])
+	grunt.registerTask('travis', ['default', 'cafemocha:travis'])
 
