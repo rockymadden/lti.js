@@ -36,13 +36,13 @@ context = toolcontext
 # lti_version (default: LTI-1p0), and resource_link_id. It is very
 # likely for parameters to change per request. If numerous parameters
 # are needed, create a stable base. This will provide lens-like behavior
-# in which new contexts only need to specify what is different. See
+# in which new parameters only need to specify what is different. See
 # http://bilby.brianmckenna.org/#environment for more information.
 params = toolparameters
 	.property('resource_link_id', '1234567890')
 
 # Issue one or more asynchronous requests and handle the response(s).
-# Responses returned Q based promises. Each contains an option monad. See
+# Responses return Q based promises. Each contains an option monad. See
 # https://github.com/kriskowal/q and http://bilby.brianmckenna.org/#option
 # for more information.
 toolconsumer.request(context, params).then((response) ->
