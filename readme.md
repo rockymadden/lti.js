@@ -40,7 +40,7 @@ params =
 # Issue one or more requests and handle the response(s). The response
 # returned is a promise containing an option monad.
 toolconsumer.request(context, params).then((response) ->
-	console.dir(response)
+	response.map((r) -> console.dir(r))
 )
 ```
 More usage examples available via the [project unit tests](https://github.com/rockymadden/lti.js/tree/master/source/test/coffeescript/lib).
