@@ -41,7 +41,7 @@ toolconsumer = bilby.environment()
 					'User-Agent': 'lti.js'
 				host: toolcontext.host
 				method: 'POST'
-				path: toolcontext.path
+				path: toolcontext.path + if urlParameters? then '?' + encode.httpPostData(urlParameters) else ''
 				port: toolcontext.port
 			request = http.request(options, (response) ->
 				data = ''
