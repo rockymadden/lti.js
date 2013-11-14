@@ -1,7 +1,7 @@
 #lti.js
 Functional library for interacting, via server-to-server communications, with Learning Tools Interoperability (LTI) tool providers.
 
-## Depending Upon
+## Depending
 The project is available on the [Node Packaged Modules registry](https://npmjs.org/package/lti). Add the dependency in your package.json file:
 
 ```javascript
@@ -16,7 +16,26 @@ npm install
 grunt
 ```
 
-## License
+## Using
+```coffeescript
+params =
+	lti_message_type: 'basic-lti-launch-request'
+	lti_version: 'LTI-1p0'
+	resource_link_id: '1234567890'
+context = toolcontext
+	.property('consumerKey', 'consumerKey')
+	.property('consumerSecret', 'consumerSecret')
+	.property('host', 'example.com')
+	.property('path', '/lti')
+	.property('port', 443)
+
+toolconsumer.request(context, params).then((response) ->
+	console.dir(response)
+)
+```
+More usage examples available via the [project unit tests](https://github.com/rockymadden/lti.js/tree/master/source/test/coffeescript/lib).
+
+## Licensing
 ```
 The MIT License (MIT)
 
