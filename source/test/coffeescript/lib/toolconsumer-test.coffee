@@ -7,10 +7,8 @@ _ = require('underscore')
 describe('toolconsumer', ->
 	describe('request()', ->
 		it('should return an option monad holding the response', (done) ->
-			formParams =
-				lti_message_type: 'basic-lti-launch-request'
-				lti_version: 'LTI-1p0'
-				resource_link_id: '429785226'
+			params = require('./toolparameters')
+				.property('resource_link_id', '1234567890')
 			context = require('./toolcontext')
 				.property('consumerKey', config.consumerKey)
 				.property('consumerSecret', config.consumerSecret)
@@ -18,7 +16,7 @@ describe('toolconsumer', ->
 				.property('path', config.path)
 				.property('port', config.port)
 
-			toolconsumer.request(context, formParams).then((response) ->
+			toolconsumer.request(context, params).then((response) ->
 				response.isSome.should.be.true
 				done()
 			)
