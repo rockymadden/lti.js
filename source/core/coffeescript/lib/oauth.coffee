@@ -13,7 +13,7 @@ oauth = bilby.environment()
 				oauth_consumer_key: consumerKey
 				oauth_nonce: @nonce()
 				oauth_signature_method: 'HMAC-SHA1'
-				oauth_timestamp: Date.now + (@utcOffset * (60 * 60 * 1000))
+				oauth_timestamp: Date.now() + (@utcOffset * (60 * 60 * 1000))
 				oauth_version: '1.0'
 
 			bilby.environment()
