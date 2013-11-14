@@ -1,6 +1,7 @@
 {
 	"consumerKey": "consumerKey",
 	"consumerSecret": "consumerSecret",
+	"utcOffset": 0,
 	"host": "host",
 	"path": "path",
 	"port": 443

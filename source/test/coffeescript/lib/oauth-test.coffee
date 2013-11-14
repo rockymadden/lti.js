@@ -3,7 +3,16 @@ oauth = require('./oauth')
 _ = require('underscore')
 
 describe('oauth', ->
-	describe('base64', -> it('should exist', -> _.has(oauth, 'base64').should.be.true))
+	describe('base64', ->
+		it('should exist', -> _.has(oauth, 'base64').should.be.true)
+		it('should default to 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', ->
+			oauth.base64.should.equal('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+		)
+	)
+	describe('utcOffset', ->
+		it('should exist', -> _.has(oauth, 'utcOffset').should.be.true)
+		it('should default to 0', -> oauth.utcOffset.should.equal(0))
+	)
 	describe('nonce()', ->
 		it('should return a random 32-digit hexidecimal string', ->
 			(typeof oauth.nonce()).should.equal('string')

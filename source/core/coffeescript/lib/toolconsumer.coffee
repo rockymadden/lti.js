@@ -18,18 +18,22 @@ toolconsumer = bilby.environment()
 			deferred = q.defer()
 
 			url = (if toolcontext.port is 443 then 'https://' else 'http://') + toolcontext.host + toolcontext.path
-			authorization = oauth.authorization(
-				url,
-				bilby.extend(formParameters, (if urlParameters? then urlParameters else {})),
-				toolcontext.consumerKey,
-				toolcontext.consumerSecret
-			)
-			# Vendors don't seem to honor OAuth 5.2 bullet 1, so toss the parameters in the post data as well.
+			authorization =
+				oauth.property(
+					'utcOffset',
+					if toolcontext.utcOffset? then toolcontext.utcOffset else 0
+				).authorization(
+					url,
+					bilby.extend(formParameters, (if urlParameters? then urlParameters else {})),
+					toolcontext.consumerKey,
+					toolcontext.consumerSecret
+				)
+			# Many vendors don't seem to honor OAuth 1.0A section 5.2 bullet 1. Toss the parameters in the post data
+			# instead of the authorization header.
 			content = encode.httpPostData(bilby.extend(formParameters, authorization))
 			options =
 				headers:
 					'Accept': '*/*'
-					'Authorization': encode.httpAuthorizationHeader(authorization)
 					'Connection': 'close'
 					'Content-Type': 'application/x-www-form-urlencoded'
 					'Content-Length': content.length

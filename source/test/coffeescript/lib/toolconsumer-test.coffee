@@ -5,7 +5,7 @@ toolconsumer = require('./toolconsumer')
 _ = require('underscore')
 
 describe('toolconsumer', ->
-	describe('basicRequest()', ->
+	describe('request()', ->
 		it('should return an option monad holding the response', (done) ->
 			formParams =
 				lti_message_type: 'basic-lti-launch-request'
@@ -19,7 +19,7 @@ describe('toolconsumer', ->
 				.property('port', config.port)
 
 			toolconsumer.request(context, formParams, {}).then((response) ->
-				console.dir(response.getOrElse('')) # TODO: Not currently working with netTrekker.
+				response.isSome.should.be.true
 				done()
 			)
 		)

@@ -4,6 +4,7 @@ _ = require('underscore')
 
 oauth = bilby.environment()
 	.property('base64', '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+	.property('utcOffset', 0)
 	.method('authorization',
 		((url, parameters, consumerKey, consumerSecret) -> url? and parameters? and consumerKey? and consumerSecret?),
 		((url, parameters, consumerKey, consumerSecret) ->
@@ -12,7 +13,7 @@ oauth = bilby.environment()
 				oauth_consumer_key: consumerKey
 				oauth_nonce: @nonce()
 				oauth_signature_method: 'HMAC-SHA1'
-				oauth_timestamp: Date.now()
+				oauth_timestamp: Date.now + (@utcOffset * (60 * 60 * 1000))
 				oauth_version: '1.0'
 
 			bilby.environment()
