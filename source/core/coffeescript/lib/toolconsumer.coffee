@@ -8,13 +8,13 @@ _ = require('underscore')
 # Adheres to LTIv1-12.
 toolconsumer = bilby.environment()
 	.method('request',
-		((toolcontext, toolparameters, urlParameters) ->
+		((toolcontext, toolparameters, toolquerystring) ->
 			toolcontext? and toolparameters? and
 			_.has(toolparameters, 'lti_message_type') and
 			_.has(toolparameters, 'lti_version') and
 			_.has(toolparameters, 'resource_link_id')
 		),
-		((toolcontext, toolparameters, urlParameters) ->
+		((toolcontext, toolparameters, toolquerystring) ->
 			deferred = q.defer()
 
 			url = (if toolcontext.port is 443 then 'https://' else 'http://') + toolcontext.host + toolcontext.path
@@ -24,7 +24,7 @@ toolconsumer = bilby.environment()
 					if toolcontext.utcOffset? then toolcontext.utcOffset else 0
 				).authorization(
 					url,
-					bilby.extend(toolparameters, (if urlParameters? then urlParameters else {})),
+					bilby.extend(toolparameters, (if toolquerystring? then toolquerystring else {})),
 					toolcontext.consumerKey,
 					toolcontext.consumerSecret
 				)
@@ -41,7 +41,7 @@ toolconsumer = bilby.environment()
 					'User-Agent': 'lti.js'
 				host: toolcontext.host
 				method: 'POST'
-				path: toolcontext.path + if urlParameters? then '?' + encode.url(urlParameters) else ''
+				path: toolcontext.path + if toolquerystring? then '?' + encode.url(toolquerystring) else ''
 				port: toolcontext.port
 			request = http.request(options, (response) ->
 				data = ''

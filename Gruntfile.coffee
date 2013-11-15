@@ -24,6 +24,7 @@ module.exports = (grunt) ->
 				'build/lib/oauth-test.js'
 				'build/lib/toolcontext-test.js'
 				'build/lib/toolparameters-test.js'
+				'build/lib/toolquerystring-test.js'
 			]
 
 	grunt.loadNpmTasks('grunt-cafe-mocha')
