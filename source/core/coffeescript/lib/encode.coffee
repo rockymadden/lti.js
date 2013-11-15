@@ -10,17 +10,25 @@ encode = bilby.environment()
 			_.has(authorization, 'oauth_signature') and _.has(authorization, 'oauth_signature_method') and
 			_.has(authorization, 'oauth_version')
 		),
-		((authorization) ->
-			_.chain(authorization)
-				.map((v, k) -> k + '="' + encodeURIComponent(v.toString()) + '"')
-				.filter((i) -> i.indexOf('oauth_') != -1)
-				.value()
-				.join(',')
-		)
+		((authorization) -> _.chain(authorization)
+			.omit(
+				_.chain(authorization)
+					.map((v, k) -> if (k.indexOf('oauth_') is -1) then k else null).filter((i) -> i?).value()
+			)
+			.map((v, k) -> k + '="' + encodeURIComponent(v.toString()) + '"')
+			.value()
+			.join(','))
 	)
 	.method('url',
 		((map) -> map?),
-		((map) -> _.map(map, (v, k) -> encodeURIComponent(k) + '=' + encodeURIComponent(v.toString())).join('&'))
+		((map) -> _.chain(map)
+			.omit(
+				_.chain(map)
+					.map((v, k) -> if (v? and typeof v is 'function') then k else null).filter((i) -> i?).value()
+			)
+			.map((v, k) -> encodeURIComponent(k) + '=' + encodeURIComponent(v.toString()))
+			.value()
+			.join('&'))
 	)
 
 module.exports = encode
