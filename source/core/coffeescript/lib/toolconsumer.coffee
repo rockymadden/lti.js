@@ -8,13 +8,13 @@ _ = require('underscore')
 # Adheres to LTIv1-12.
 toolconsumer = bilby.environment()
 	.method('request',
-		((toolcontext, formParameters, urlParameters) ->
-			toolcontext? and formParameters? and
-			_.has(formParameters, 'lti_message_type') and
-			_.has(formParameters, 'lti_version') and
-			_.has(formParameters, 'resource_link_id')
+		((toolcontext, toolparameters, urlParameters) ->
+			toolcontext? and toolparameters? and
+			_.has(toolparameters, 'lti_message_type') and
+			_.has(toolparameters, 'lti_version') and
+			_.has(toolparameters, 'resource_link_id')
 		),
-		((toolcontext, formParameters, urlParameters) ->
+		((toolcontext, toolparameters, urlParameters) ->
 			deferred = q.defer()
 
 			url = (if toolcontext.port is 443 then 'https://' else 'http://') + toolcontext.host + toolcontext.path
@@ -24,13 +24,13 @@ toolconsumer = bilby.environment()
 					if toolcontext.utcOffset? then toolcontext.utcOffset else 0
 				).authorization(
 					url,
-					bilby.extend(formParameters, (if urlParameters? then urlParameters else {})),
+					bilby.extend(toolparameters, (if urlParameters? then urlParameters else {})),
 					toolcontext.consumerKey,
 					toolcontext.consumerSecret
 				)
 			# Many vendors don't seem to honor OAuth 1.0A section 5.2 bullet 1. Toss the parameters in the post data
 			# instead of the authorization header.
-			content = encode.url(bilby.extend(formParameters, authorization))
+			content = encode.url(bilby.extend(toolparameters, authorization))
 			options =
 				headers:
 					'Accept': '*/*'
