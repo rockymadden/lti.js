@@ -1,4 +1,5 @@
 bilby = require('bilby')
+func = require('./func')
 oauthsign = require('oauth-sign')
 _ = require('underscore')
 
@@ -6,7 +7,10 @@ oauth = bilby.environment()
 	.property('base64', '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
 	.property('utcOffset', 0)
 	.method('authorization',
-		((url, parameters, consumerKey, consumerSecret) -> url? and parameters? and consumerKey? and consumerSecret?),
+		((url, parameters, consumerKey, consumerSecret) ->
+			func.existy(url) and func.existy(parameters) and
+			func.existy(consumerKey) and func.existy(consumerSecret)
+		),
 		((url, parameters, consumerKey, consumerSecret) ->
 			oauthParameters =
 				oauth_callback: 'oob'
@@ -32,10 +36,8 @@ oauth = bilby.environment()
 	))
 	.method('sign',
 		((url, parameters, consumerSecret) ->
-			url? and parameters? and consumerSecret? and
-			_.has(parameters, 'oauth_callback') and _.has(parameters, 'oauth_consumer_key') and
-			_.has(parameters, 'oauth_nonce') and _.has(parameters, 'oauth_timestamp') and
-			_.has(parameters, 'oauth_signature_method') and _.has(parameters, 'oauth_version')
+			func.existy(url) and func.existy(parameters) and
+			func.existy(consumerSecret) and func.unsignedOAuthy(parameters)
 		),
 		((url, parameters, consumerSecret) -> switch parameters.oauth_signature_method
 			when 'HMAC-SHA1'

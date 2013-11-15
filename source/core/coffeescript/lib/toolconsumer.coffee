@@ -1,5 +1,6 @@
 bilby = require('bilby')
 encode = require('./encode')
+func = require('./func')
 http = require('http')
 oauth = require('./oauth')
 q = require('q')
@@ -7,12 +8,16 @@ _ = require('underscore')
 
 # Adheres to LTIv1-12.
 toolconsumer = bilby.environment()
+	.property('toolcontext', null)
+	.method('request',
+		((toolparameters, toolquerystring) -> func.toolparametery(toolparameters)),
+		((toolparameters, toolquerystring) ->
+			@request(@toolcontext, toolparameters, if func.existy(toolquerystring) then toolquerystring else null)
+		)
+	)
 	.method('request',
 		((toolcontext, toolparameters, toolquerystring) ->
-			toolcontext? and toolparameters? and
-			_.has(toolparameters, 'lti_message_type') and
-			_.has(toolparameters, 'lti_version') and
-			_.has(toolparameters, 'resource_link_id')
+			func.toolcontexty(toolcontext) and func.toolparametery(toolparameters)
 		),
 		((toolcontext, toolparameters, toolquerystring) ->
 			deferred = q.defer()
@@ -21,10 +26,13 @@ toolconsumer = bilby.environment()
 			authorization =
 				oauth.property(
 					'utcOffset',
-					if toolcontext.utcOffset? then toolcontext.utcOffset else 0
+					if func.existy(toolcontext.utcOffset) then toolcontext.utcOffset else 0
 				).authorization(
 					url,
-					bilby.extend(toolparameters, (if toolquerystring? then toolquerystring else {})),
+					bilby.extend(
+						toolparameters,
+						(if func.toolquerystringy(toolquerystring) then toolquerystring else {})
+					),
 					toolcontext.consumerKey,
 					toolcontext.consumerSecret
 				)
@@ -41,7 +49,8 @@ toolconsumer = bilby.environment()
 					'User-Agent': 'lti.js'
 				host: toolcontext.host
 				method: 'POST'
-				path: toolcontext.path + if toolquerystring? then '?' + encode.url(toolquerystring) else ''
+				path: toolcontext.path +
+					if func.toolquerystringy(toolquerystring) then '?' + encode.url(toolquerystring) else ''
 				port: toolcontext.port
 			request = http.request(options, (response) ->
 				data = ''
