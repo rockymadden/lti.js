@@ -30,7 +30,7 @@ context.withSession((consumer) ->
 	)
 )
 ```
-More usage examples available via the [project unit tests](https://github.com/rockymadden/lti.js/tree/master/source/test/coffeescript/lib).
+More usage examples available via the [project unit tests](https://github.com/rockymadden/lti.js/tree/master/source/test/coffeescript).
 
 ## Conceptualizing
 * __Tool Contexts:__ Tool contexts are immutable structures made up of the consumer key, consumer/shared secret, host, path, port (default: 443), and UTC offset (default: 0). It is unusual for contexts to change per request, but it is possible depending upon the tool provider. If new contexts are needed, create a base context. This will provide lens-like behavior in which new contexts only need to specify what is different. See [bilby.js](http://bilby.brianmckenna.org/#environment) for more information.
