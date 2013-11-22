@@ -1,8 +1,7 @@
-config = require('./toolconsumer-test.config')
+config = require('../etc/toolconsumer-test.config')
 should = require('should')
 oauth = require('./oauth')
 toolconsumer = require('./toolconsumer')
-_ = require('underscore')
 
 describe('toolconsumer', ->
 	describe('request(), a multimethod, without toolcontext', ->

@@ -1,16 +1,15 @@
 should = require('should')
 oauth = require('./oauth')
-_ = require('underscore')
 
 describe('oauth', ->
 	describe('base64', ->
-		it('should exist', -> _.has(oauth, 'base64').should.be.true)
+		it('should exist', -> oauth.hasOwnProperty('base64').should.be.true)
 		it('should default to 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', ->
 			oauth.base64.should.equal('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
 		)
 	)
 	describe('utcOffset', ->
-		it('should exist', -> _.has(oauth, 'utcOffset').should.be.true)
+		it('should exist', -> oauth.hasOwnProperty('utcOffset').should.be.true)
 		it('should default to 0', -> oauth.utcOffset.should.equal(0))
 	)
 	describe('nonce()', ->
@@ -38,8 +37,8 @@ describe('oauth', ->
 		it('should return an immutable environment containing all oauth parameters', ->
 			auth = oauth.authorization('url', {}, 'key', 'secret')
 
-			_.has(auth, 'lti_version').should.be.false
-			_.has(auth, 'oauth_signature').should.be.true
+			auth.hasOwnProperty('lti_version').should.be.false
+			auth.hasOwnProperty('oauth_signature').should.be.true
 		)
 	)
 )

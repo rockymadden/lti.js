@@ -18,14 +18,14 @@ grunt
 
 ## Using
 ```coffeescript
-context = toolcontext
+context = ToolContext
 	.property('consumerKey', 'consumerKey')
 	.property('consumerSecret', 'consumerSecret')
 	.property('host', 'example.com')
 	.property('path', '/lti')
 
 context.withSession((consumer) ->
-	consumer.request(toolparameters.property('resource_link_id', '1234567890')).then((response) ->
+	consumer.request(ToolParameters.property('resource_link_id', '1234567890')).then((response) ->
 		response.map((r) -> console.dir(r))
 	)
 )

@@ -1,6 +1,5 @@
 should = require('should')
 toolcontext = require('./toolcontext')
-_ = require('underscore')
 
 describe('toolcontext', ->
 	describe('consumerKey', -> it('should exist', -> toolcontext.hasOwnProperty('consumerKey').should.be.true))

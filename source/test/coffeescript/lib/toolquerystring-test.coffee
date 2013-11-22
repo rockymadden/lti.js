@@ -1,6 +1,5 @@
 should = require('should')
 toolquerystring = require('./toolquerystring')
-_ = require('underscore')
 
 describe('toolquerystring', ->
 	# Four keys by default exposed in Bilby environments.

@@ -3,28 +3,44 @@ module.exports = (grunt) ->
 		pkg: grunt.file.readJSON 'package.json'
 		coffee:
 			core: files: [
-				expand: true
-				cwd: 'source/core/coffeescript/'
-				src: ['**/*.coffee']
-				dest: 'build/'
-				ext: '.js'
+				{
+					expand: true
+					cwd: 'source/core/coffeescript/lib/'
+					src: ['**/*.coffee']
+					dest: 'build/lib/'
+					ext: '.js'
+				}, {
+					expand: true
+					cwd: 'source/core/coffeescript/'
+					src: ['**/*.coffee']
+					dest: 'build/'
+					ext: '.js'
+				}
 			]
 			test: files: [
-				expand: true
-				cwd: 'source/test/coffeescript/'
-				src: ['**/*.coffee']
-				dest: 'build/'
-				ext: '.js'
+				{
+					expand: true
+					cwd: 'source/test/coffeescript/lib/'
+					src: ['**/*.coffee']
+					dest: 'build/lib/'
+					ext: '.js'
+				}, {
+					expand: true
+					cwd: 'source/test/coffeescript/'
+					src: ['**/*.coffee']
+					dest: 'build/'
+					ext: '.js'
+				}
 			]
-		copy: test: files: ['build/toolconsumer-test.config.json': 'resource/test/json/toolconsumer-test.config.json']
+		copy: test: files: ['build/etc/toolconsumer-test.config.json': 'resource/test/json/etc/toolconsumer-test.config.json']
 		cafemocha:
 			all: src: ['build/**/*-test.js']
 			travis: src: [
-				'build/encode-test.js'
-				'build/oauth-test.js'
-				'build/toolcontext-test.js'
-				'build/toolparameters-test.js'
-				'build/toolquerystring-test.js'
+				'build/lib/encode-test.js'
+				'build/lib/oauth-test.js'
+				'build/lib/toolcontext-test.js'
+				'build/lib/toolparameters-test.js'
+				'build/lib/toolquerystring-test.js'
 			]
 
 	grunt.loadNpmTasks('grunt-cafe-mocha')
