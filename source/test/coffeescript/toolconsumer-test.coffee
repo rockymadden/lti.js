@@ -1,4 +1,4 @@
-config = require('../etc/toolconsumer.config')
+config = require('./toolconsumer-test.config')
 should = require('should')
 oauth = require('./oauth')
 toolconsumer = require('./toolconsumer')

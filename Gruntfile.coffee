@@ -4,27 +4,27 @@ module.exports = (grunt) ->
 		coffee:
 			core: files: [
 				expand: true
-				cwd: 'source/core/coffeescript/lib/'
+				cwd: 'source/core/coffeescript/'
 				src: ['**/*.coffee']
-				dest: 'build/lib/'
+				dest: 'build/'
 				ext: '.js'
 			]
 			test: files: [
 				expand: true
-				cwd: 'source/test/coffeescript/lib/'
+				cwd: 'source/test/coffeescript/'
 				src: ['**/*.coffee']
-				dest: 'build/lib/'
+				dest: 'build/'
 				ext: '.js'
 			]
-		copy: test: files: ['build/etc/toolconsumer.config.json': 'resource/test/json/etc/toolconsumer.config.json']
+		copy: test: files: ['build/toolconsumer-test.config.json': 'resource/test/json/toolconsumer-test.config.json']
 		cafemocha:
 			all: src: ['build/**/*-test.js']
 			travis: src: [
-				'build/lib/encode-test.js'
-				'build/lib/oauth-test.js'
-				'build/lib/toolcontext-test.js'
-				'build/lib/toolparameters-test.js'
-				'build/lib/toolquerystring-test.js'
+				'build/encode-test.js'
+				'build/oauth-test.js'
+				'build/toolcontext-test.js'
+				'build/toolparameters-test.js'
+				'build/toolquerystring-test.js'
 			]
 
 	grunt.loadNpmTasks('grunt-cafe-mocha')
