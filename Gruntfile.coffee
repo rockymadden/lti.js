@@ -36,6 +36,7 @@ module.exports = (grunt) ->
 		cafemocha:
 			all: src: ['build/**/*-test.js']
 			travis: src: [
+				'build/lti-test.js'
 				'build/lib/encode-test.js'
 				'build/lib/oauth-test.js'
 				'build/lib/toolcontext-test.js'
