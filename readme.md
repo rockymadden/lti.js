@@ -17,24 +17,17 @@ grunt
 ```
 
 ## Using
-Example in which tool contexts do not change in-between calls (the most common scenario):
 ```coffeescript
 context = toolcontext
 	.property('consumerKey', 'consumerKey')
 	.property('consumerSecret', 'consumerSecret')
 	.property('host', 'example.com')
 	.property('path', '/lti')
-consumer = toolconsumer
-	.property('toolcontext', context)
 
-# Request number one.
-consumer.request(toolparameters.property('resource_link_id', '1234567890')).then((response) ->
-	response.map((r) -> console.dir(r))
-)
-
-# Request number two.
-consumer.request(toolparameters.property('resource_link_id', '0123456789')).then((response) ->
-	response.map((r) -> console.dir(r))
+context.withSession((consumer) ->
+	consumer.request(toolparameters.property('resource_link_id', '1234567890')).then((response) ->
+		response.map((r) -> console.dir(r))
+	)
 )
 ```
 More usage examples available via the [project unit tests](https://github.com/rockymadden/lti.js/tree/master/source/test/coffeescript/lib).

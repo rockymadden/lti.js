@@ -12,29 +12,21 @@ toolconsumer = bilby.environment()
 	.method('request',
 		((toolparameters, toolquerystring) -> func.toolparametery(toolparameters)),
 		((toolparameters, toolquerystring) ->
-			@request(@toolcontext, toolparameters, if func.existy(toolquerystring) then toolquerystring else null)
-		)
-	)
-	.method('request',
-		((toolcontext, toolparameters, toolquerystring) ->
-			func.toolcontexty(toolcontext) and func.toolparametery(toolparameters)
-		),
-		((toolcontext, toolparameters, toolquerystring) ->
 			deferred = q.defer()
 
-			url = (if toolcontext.port is 443 then 'https://' else 'http://') + toolcontext.host + toolcontext.path
+			url = (if @toolcontext.port is 443 then 'https://' else 'http://') + @toolcontext.host + @toolcontext.path
 			authorization =
 				oauth.property(
 					'utcOffset',
-					if func.existy(toolcontext.utcOffset) then toolcontext.utcOffset else 0
+					if func.existy(@toolcontext.utcOffset) then @toolcontext.utcOffset else 0
 				).authorization(
 					url,
 					bilby.extend(
 						toolparameters,
 						(if func.toolquerystringy(toolquerystring) then toolquerystring else {})
 					),
-					toolcontext.consumerKey,
-					toolcontext.consumerSecret
+					@toolcontext.consumerKey,
+					@toolcontext.consumerSecret
 				)
 			# Many vendors don't seem to honor OAuth 1.0A section 5.2 bullet 1. Toss the parameters in the post data
 			# instead of the authorization header.
@@ -45,13 +37,13 @@ toolconsumer = bilby.environment()
 					'Connection': 'close'
 					'Content-Type': 'application/x-www-form-urlencoded'
 					'Content-Length': content.length
-					'Host': toolcontext.host
+					'Host': @toolcontext.host
 					'User-Agent': 'lti.js'
-				host: toolcontext.host
+				host: @toolcontext.host
 				method: 'POST'
-				path: toolcontext.path +
+				path: @toolcontext.path +
 					if func.toolquerystringy(toolquerystring) then '?' + encode.url(toolquerystring) else ''
-				port: toolcontext.port
+				port: @toolcontext.port
 			request = http.request(options, (response) ->
 				data = ''
 
