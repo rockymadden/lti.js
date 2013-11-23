@@ -1,5 +1,5 @@
 #lti.js [![Build Status](https://travis-ci.org/rockymadden/lti.js.png?branch=master)](http://travis-ci.org/rockymadden/lti.js)
-Functional library for interacting, via server-to-server communications, with Learning Tools Interoperability (LTI) tool providers.
+Functional library for interacting, via server-to-server communications, with Learning Tools Interoperability (LTI) tool providers. The project makes heavy use of [bilby.js](https://github.com/puffnfresh/bilby.js) and [Q](https://github.com/kriskowal/q). You will likely need a familiarity with basic functional programming concepts and promises to be successful.
 
 ## Depending
 The project is available on the [Node Packaged Modules registry](https://npmjs.org/package/lti). Add the dependency in your package.json file:
@@ -17,17 +17,22 @@ grunt
 ```
 
 ## Using
+CoffeeScript:
 ```coffeescript
-context = ToolContext
+# Setup the tool context (hence the name).
+context = lti.ToolContext
 	.property('consumerKey', 'consumerKey')
 	.property('consumerSecret', 'consumerSecret')
 	.property('host', 'example.com')
 	.property('path', '/lti')
 
 context.withSession((consumer) ->
-	consumer.request(ToolParameters.property('resource_link_id', '1234567890')).then((response) ->
-		response.map((r) -> console.dir(r))
-	)
+	# Simple one-off request, we could also make a large array of promises and asynchronously
+	# execute all of them. Check out: https://github.com/kriskowal/q/wiki/API-Reference#promiseall
+	consumer.request(lti.ToolParameters.property('resource_link_id', '1234567890'))
+		.then((response) -> response.map((r) -> console.dir(r)))
+		.catch((error) -> console.log(error))
+		.done(-> console.log('All done!'))
 )
 ```
 More usage examples available via the [project unit tests](https://github.com/rockymadden/lti.js/tree/master/source/test/coffeescript).
