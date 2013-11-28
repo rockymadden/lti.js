@@ -16,8 +16,13 @@ npm install
 grunt
 ```
 
+## Conceptualizing
+* __Tool Contexts:__ Tool contexts are immutable structures made up of the consumer key, consumer/shared secret, host, path, port (default: 443), and UTC offset (default: 0). It is unusual for contexts to change per request, but it is possible depending upon the tool provider. If new contexts are needed, create a base context. This will provide lens-like behavior in which new contexts only need to specify what is different. See [bilby.js](http://bilby.brianmckenna.org/#environment) for more information.
+* __Tool Parameters:__ Tool parameters are immutable structures made up of, at minimum, lti\_message\_type (default: basic-lti-launch-request), lti\_version (default: LTI-1p0), and resource\_link\_id. It is very likely for parameters to change per request. If numerous parameters are needed, create a stable base. This will provide lens-like behavior in which new parameters only need to specify what is different. See [bilby.js](http://bilby.brianmckenna.org/#environment) for more information.
+* __Tool Consumers:__ Tool consumers allow you to issue one or more asynchronous requests and handle the response(s). Responses return Q based promises. Each contains an option monad. See [Q](https://github.com/kriskowal/q) and [bilby.js](http://bilby.brianmckenna.org/#option) for more information.
+
 ## Using
-CoffeeScript:
+__CoffeeScript:__
 ```coffeescript
 # Setup the tool context (hence the name).
 context = lti.ToolContext
@@ -36,11 +41,6 @@ context.withSession((consumer) ->
 )
 ```
 More usage examples available via the [project unit tests](https://github.com/rockymadden/lti.js/tree/master/source/test/coffeescript).
-
-## Conceptualizing
-* __Tool Contexts:__ Tool contexts are immutable structures made up of the consumer key, consumer/shared secret, host, path, port (default: 443), and UTC offset (default: 0). It is unusual for contexts to change per request, but it is possible depending upon the tool provider. If new contexts are needed, create a base context. This will provide lens-like behavior in which new contexts only need to specify what is different. See [bilby.js](http://bilby.brianmckenna.org/#environment) for more information.
-* __Tool Parameters:__ Tool parameters are immutable structures made up of, at minimum, lti\_message\_type (default: basic-lti-launch-request), lti\_version (default: LTI-1p0), and resource\_link\_id. It is very likely for parameters to change per request. If numerous parameters are needed, create a stable base. This will provide lens-like behavior in which new parameters only need to specify what is different. See [bilby.js](http://bilby.brianmckenna.org/#environment) for more information.
-* __Tool Consumers:__ Tool consumers allow you to issue one or more asynchronous requests and handle the response(s). Responses return Q based promises. Each contains an option monad. See [Q](https://github.com/kriskowal/q) and [bilby.js](http://bilby.brianmckenna.org/#option) for more information.
 
 ## Licensing
 ```
