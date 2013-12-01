@@ -22,7 +22,7 @@ describe('oauth', ->
 	describe('sign()', ->
 		it('should return a string based signature', ->
 			params =
-				oauth_callback: 'oob'
+				oauth_callback: 'about:blank'
 				oauth_consumer_key: 'oauth_consumer_key'
 				oauth_nonce: oauth.nonce()
 				oauth_signature_method: 'HMAC-SHA1'

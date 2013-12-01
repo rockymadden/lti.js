@@ -1,0 +1,8 @@
+{
+	"consumerKey": "key",
+	"consumerSecret": "secret",
+	"utcOffset": 0,
+	"host": "www.imsglobal.org",
+	"path": "/developers/LTI/test/v1p1/tool.php",
+	"port": 80
+}

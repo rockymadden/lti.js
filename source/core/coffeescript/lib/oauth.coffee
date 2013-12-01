@@ -1,4 +1,5 @@
 bilby = require('bilby')
+encode = require('./encode')
 func = require('./func')
 oauthsign = require('oauth-sign')
 _ = require('underscore')
@@ -13,7 +14,7 @@ oauth = bilby.environment()
 		),
 		((url, parameters, consumerKey, consumerSecret) ->
 			oauthParameters =
-				oauth_callback: 'oob'
+				oauth_callback: 'about:blank'
 				oauth_consumer_key: consumerKey
 				oauth_nonce: @nonce()
 				oauth_signature_method: 'HMAC-SHA1'
@@ -41,7 +42,7 @@ oauth = bilby.environment()
 		),
 		((url, parameters, consumerSecret) -> switch parameters.oauth_signature_method
 			when 'HMAC-SHA1'
-				oauthsign.hmacsign('POST', url, parameters, consumerSecret)
+				oauthsign.hmacsign('POST', url, encode.defunc(parameters), consumerSecret)
 			else throw 'Expected supported signature method.'
 		)
 	)
