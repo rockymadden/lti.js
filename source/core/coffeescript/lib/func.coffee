@@ -1,6 +1,16 @@
 bilby = require('bilby')
+_ = require('underscore')
 
 func = bilby.environment()
+	.method('defunc',
+		((map) -> func.existy(map)),
+		((map) -> _.omit(map,
+			_.chain(map)
+				.map((v, k) -> if (func.existy(v) and typeof v is 'function') then k else null)
+				.filter((i) -> func.existy(i))
+				.value()
+		))
+	)
 	.method('environmenty',
 		((a) -> true),
 		((a) -> @existy(a) and a.hasOwnProperty('method') and a.hasOwnProperty('property'))

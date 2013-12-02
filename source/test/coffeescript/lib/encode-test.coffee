@@ -3,11 +3,6 @@ encode = require('./encode')
 oauth = require('./oauth')
 
 describe('encode', ->
-	describe('defunc()', ->
-		it('should return a map with keys which had function values removed', ->
-			Object.keys(encode.defunc(nonfunc: 'nonfunc', func: ((test) ->))).length.should.equal(1)
-		)
-	)
 	describe('httpAuthorizationHeader()', ->
 		it('should return a string representation of an authorization for use in an http header', ->
 			encode.httpAuthorizationHeader(

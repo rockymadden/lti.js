@@ -3,20 +3,11 @@ func = require('./func')
 _ = require('underscore')
 
 encode = bilby.environment()
-	.method('defunc',
-		((map) -> func.existy(map)),
-		((map) -> _.omit(map,
-			_.chain(map)
-				.map((v, k) -> if (func.existy(v) and typeof v is 'function') then k else null)
-				.filter((i) -> func.existy(i))
-				.value()
-		))
-	)
 	.method('httpAuthorizationHeader',
 		((authorization) -> func.signedOAuthy(authorization)),
 		((authorization) ->
 			self = @
-			_.map(self.defunc(authorization), (v, k) -> k + '="' + self.rfc3986(v.toString()) + '"').join(','))
+			_.map(func.defunc(authorization), (v, k) -> k + '="' + self.rfc3986(v.toString()) + '"').join(','))
 	)
 	.method('rfc3986',
 		((string) -> func.existy(string)),
@@ -28,7 +19,7 @@ encode = bilby.environment()
 		((map) -> func.existy(map)),
 		((map) ->
 			self = @
-			_.map(self.defunc(map), (v, k) -> self.rfc3986(k) + '=' + self.rfc3986(v.toString())).join('&'))
+			_.map(func.defunc(map), (v, k) -> self.rfc3986(k) + '=' + self.rfc3986(v.toString())).join('&'))
 	)
 
 module.exports = encode
