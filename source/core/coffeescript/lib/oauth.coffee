@@ -1,4 +1,5 @@
 bilby = require('bilby')
+convert = require('./convert')
 func = require('./func')
 oauthsign = require('oauth-sign')
 _ = require('underscore')
@@ -24,7 +25,14 @@ oauth = bilby.environment()
 				.property('oauth_callback', oauthParameters.oauth_callback)
 				.property('oauth_consumer_key', oauthParameters.oauth_consumer_key)
 				.property('oauth_nonce', oauthParameters.oauth_nonce)
-				.property('oauth_signature', @sign(url, bilby.extend(parameters, oauthParameters), consumerSecret))
+				.property('oauth_signature', @sign(
+					url,
+					bilby.extend(
+						(if func.environmenty(parameters) then convert.toMap(parameters) else parameters),
+						oauthParameters
+					),
+					consumerSecret
+				))
 				.property('oauth_signature_method', oauthParameters.oauth_signature_method)
 				.property('oauth_timestamp', oauthParameters.oauth_timestamp)
 				.property('oauth_version', oauthParameters.oauth_version)
@@ -41,7 +49,12 @@ oauth = bilby.environment()
 		),
 		((url, parameters, consumerSecret) -> switch parameters.oauth_signature_method
 			when 'HMAC-SHA1'
-				oauthsign.hmacsign('POST', url, func.defunc(parameters), consumerSecret)
+				oauthsign.hmacsign(
+					'POST',
+					url,
+					(if func.environmenty(parameters) then convert.toMap(parameters) else parameters),
+					consumerSecret
+				)
 			else throw 'Expected supported signature method.'
 		)
 	)

@@ -1,4 +1,5 @@
 bilby = require('bilby')
+convert = require('./convert')
 func = require('./func')
 _ = require('underscore')
 
@@ -7,7 +8,10 @@ encode = bilby.environment()
 		((authorization) -> func.signedOAuthy(authorization)),
 		((authorization) ->
 			self = @
-			_.map(func.defunc(authorization), (v, k) -> k + '="' + self.rfc3986(v.toString()) + '"').join(','))
+			_.map(
+				(if func.environmenty(authorization) then convert.toMap(authorization) else authorization),
+				(v, k) -> k + '="' + self.rfc3986(v.toString()) + '"').join(',')
+			)
 	)
 	.method('rfc3986',
 		((string) -> func.existy(string)),
@@ -19,7 +23,10 @@ encode = bilby.environment()
 		((map) -> func.existy(map)),
 		((map) ->
 			self = @
-			_.map(func.defunc(map), (v, k) -> self.rfc3986(k) + '=' + self.rfc3986(v.toString())).join('&'))
+			_.map(
+				(if func.environmenty(map) then convert.toMap(map) else map),
+				(v, k) -> self.rfc3986(k) + '=' + self.rfc3986(v.toString())).join('&')
+			)
 	)
 
 module.exports = encode
