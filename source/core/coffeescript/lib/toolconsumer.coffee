@@ -10,7 +10,10 @@ _ = require('underscore')
 toolconsumer = bilby.environment()
 	.property('toolcontext', null)
 	.method('request',
-		((toolparameters, toolquerystring) -> truth.toolparametery(toolparameters)),
+		((toolparameters, toolquerystring) ->
+			truth.toolparametery(toolparameters) and
+			(not truth.existy(toolquerystring) or truth.toolquerystringy(toolparameters))
+		),
 		((toolparameters, toolquerystring) ->
 			deferred = q.defer()
 
@@ -23,7 +26,7 @@ toolconsumer = bilby.environment()
 					url,
 					bilby.extend(
 						toolparameters,
-						(if truth.toolquerystringy(toolquerystring) then toolquerystring else {})
+						(if truth.existy(toolquerystring) then toolquerystring else {})
 					),
 					@toolcontext.consumerKey,
 					@toolcontext.consumerSecret
