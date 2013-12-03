@@ -1,6 +1,6 @@
 bilby = require('bilby')
 
-func = bilby.environment()
+truth = bilby.environment()
 	.method('environmenty',
 		((a) -> true),
 		((a) -> @existy(a) and a.hasOwnProperty('method') and a.hasOwnProperty('property'))
@@ -53,4 +53,4 @@ func = bilby.environment()
 		)
 	)
 
-module.exports = func
+module.exports = truth

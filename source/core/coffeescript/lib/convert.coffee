@@ -1,19 +1,19 @@
 bilby = require('bilby')
-func = require('./func')
+truth = require('./truth')
 _ = require('underscore')
 
 convert = bilby.environment()
 	.method('toMap',
-		((environment) -> func.environmenty(environment)),
+		((environment) -> truth.environmenty(environment)),
 		((environment) -> _.omit(environment,
 			_.chain(environment)
-				.map((v, k) -> if (func.existy(v) and typeof v is 'function') then k else null)
-				.filter((i) -> func.existy(i))
+				.map((v, k) -> if (truth.existy(v) and typeof v is 'function') then k else null)
+				.filter((i) -> truth.existy(i))
 				.value()
 		))
 	)
 	.method('toEnvironment',
-		((map) -> func.existy(map)),
+		((map) -> truth.existy(map)),
 		((map) ->
 			fn = (m, e) ->
 				keys = Object.keys(m)

@@ -1,16 +1,16 @@
 bilby = require('bilby')
 encode = require('./encode')
-func = require('./func')
 http = require('http')
 oauth = require('./oauth')
 q = require('q')
+truth = require('./truth')
 _ = require('underscore')
 
 # Adheres to LTIv1-12.
 toolconsumer = bilby.environment()
 	.property('toolcontext', null)
 	.method('request',
-		((toolparameters, toolquerystring) -> func.toolparametery(toolparameters)),
+		((toolparameters, toolquerystring) -> truth.toolparametery(toolparameters)),
 		((toolparameters, toolquerystring) ->
 			deferred = q.defer()
 
@@ -18,12 +18,12 @@ toolconsumer = bilby.environment()
 			authorization =
 				oauth.property(
 					'utcOffset',
-					if func.existy(@toolcontext.utcOffset) then @toolcontext.utcOffset else 0
+					if truth.existy(@toolcontext.utcOffset) then @toolcontext.utcOffset else 0
 				).authorization(
 					url,
 					bilby.extend(
 						toolparameters,
-						(if func.toolquerystringy(toolquerystring) then toolquerystring else {})
+						(if truth.toolquerystringy(toolquerystring) then toolquerystring else {})
 					),
 					@toolcontext.consumerKey,
 					@toolcontext.consumerSecret
@@ -42,7 +42,7 @@ toolconsumer = bilby.environment()
 				host: @toolcontext.host
 				method: 'POST'
 				path: @toolcontext.path +
-					if func.toolquerystringy(toolquerystring) then '?' + encode.url(toolquerystring) else ''
+					if truth.toolquerystringy(toolquerystring) then '?' + encode.url(toolquerystring) else ''
 				port: @toolcontext.port
 			request = http.request(options, (response) ->
 				data = ''
