@@ -14,5 +14,9 @@
 # OS ignores.
 .DS_Store
 
+# IDE ignores.
+*.idea
+*.iml
+
 # Project ignores.
 /node_modules
