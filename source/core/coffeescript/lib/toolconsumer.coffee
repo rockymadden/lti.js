@@ -1,4 +1,5 @@
 bilby = require('bilby')
+convert = require('./convert')
 encode = require('./encode')
 http = require('http')
 oauth = require('./oauth')
@@ -61,4 +62,22 @@ toolconsumer = bilby.environment()
 		)
 	)
 
-module.exports = toolconsumer
+friendlytoolconsumer = toolconsumer
+	.method('request',
+		((toolparameters, toolquerystring) ->
+			not truth.toolparametery(toolparameters) and
+			(not truth.existy(toolquerystring) or not truth.toolquerystringy(toolparameters))
+		),
+		((toolparameters, toolquerystring) ->
+			if truth.existy(toolquerystring)
+				bilby.bind(toolconsumer.request)(
+					@,
+					convert.toEnvironment(toolparameters),
+					convert.toEnvironment(toolquerystring)
+				)()
+			else
+				bilby.bind(toolconsumer.request)(@, convert.toEnvironment(toolparameters))()
+		)
+	)
+
+module.exports = friendlytoolconsumer
