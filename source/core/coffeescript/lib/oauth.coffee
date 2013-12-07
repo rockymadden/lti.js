@@ -38,10 +38,13 @@ oauth = bilby.environment()
 				.property('oauth_version', oauthParameters.oauth_version)
 		)
 	)
-	.method('nonce', (-> true), (->
-		self = @
-		_.map([0..31], -> self.base64[Math.floor(Math.random() * self.base64.length)]).join('')
-	))
+	.method('nonce',
+		(-> true),
+		(->
+			self = @
+			_.map([0..31], -> self.base64[Math.floor(Math.random() * self.base64.length)]).join('')
+		)
+	)
 	.method('sign',
 		((url, parameters, consumerSecret) ->
 			truth.existy(url) and truth.existy(parameters) and
