@@ -1,4 +1,4 @@
-#lti.js [![Build Status](https://travis-ci.org/rockymadden/lti.js.png?branch=master)](http://travis-ci.org/rockymadden/lti.js)
+#lti.js [![Build Status](https://travis-ci.org/rockymadden/lti.js.png?branch=master)](http://travis-ci.org/rockymadden/lti.js) [![Coverage Status](https://coveralls.io/repos/rockymadden/lti.js/badge.png)](https://coveralls.io/r/rockymadden/lti.js)
 Functional library for interacting, via server-to-server communications, with Learning Tools Interoperability (LTI) tool providers. The project makes heavy use of [bilby.js](https://github.com/puffnfresh/bilby.js) and [Q](https://github.com/kriskowal/q). You will likely need a familiarity with basic functional programming concepts and promises to be successful.
 
 ## Depending
