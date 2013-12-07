@@ -1,5 +1,5 @@
 {
-	"homepage": "http://rockymadden.com/lti.js/",
+	"author": "Rocky Madden (http://rockymadden.com/)",
 	"dependencies": {
 		"bilby": "0.0.x",
 		"oauth-sign": "0.4.x",
@@ -17,6 +17,9 @@
 		"mocha": "1.15.x",
 		"should": "2.1.x"
 	},
+	"engines": {"node": ">=0.10.0"},
+	"homepage": "http://rockymadden.com/lti.js/",
+	"keywords": ["lti", "oauth", "learning tools interoperability", "ims", "ims global", "education"],
 	"main": "build/lti.js",
 	"name": "lti",
 	"repository": {
