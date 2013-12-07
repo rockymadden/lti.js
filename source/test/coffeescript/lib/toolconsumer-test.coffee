@@ -30,9 +30,9 @@ describe('toolconsumer', ->
 
 			(toolconsumer.property('toolcontext', context))
 				.request(
-					resource_link_id: '0'
-					lti_message_type: 'basic-lti-launch-request'
 					lti_version: 'LTI-1p0'
+					lti_message_type: 'basic-lti-launch-request'
+					resource_link_id: '0'
 				).then((response) ->
 					response.isSome.should.be.true
 					response.getOrElse('').indexOf('Context Information:').should.be.above(-1)
