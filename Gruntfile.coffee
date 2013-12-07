@@ -17,25 +17,19 @@ module.exports = (grunt) ->
 				ext: '.js'
 			}]
 		copy: test: files: ['build/etc/toolconsumer-test.config.json': 'resource/test/json/etc/toolconsumer-test.config.json']
-		cafemocha:
-			options: timeout: 16000
-			all: src: ['build/**/*-test.js']
-			travis: src: ['build/**/*-test.js']
 		mochacov:
 			options:
-				reporter: 'spec'
+				files: ['build/**/*-test.js']
 				require: ['should']
-				quiet: true
-			all: src: ['build/**/*-test.js']
-			travis:
-				src: ['build/**/*-test.js']
-				options: coveralls: serviceName: 'travis-ci'
+				slow: 500
+				timeout: 16000
+			test: options: reporter: 'spec'
+			coverage: options: coveralls: serviceName: 'travis-ci'
 
-	grunt.loadNpmTasks('grunt-cafe-mocha')
 	grunt.loadNpmTasks('grunt-contrib-coffee')
 	grunt.loadNpmTasks('grunt-contrib-copy')
 	grunt.loadNpmTasks('grunt-mocha-cov')
 
 	grunt.registerTask('default', ['coffee', 'copy'])
-	grunt.registerTask('test', ['default', 'cafemocha:all', 'mochacov:all'])
-	grunt.registerTask('travis', ['default', 'cafemocha:travis', 'mochacov:travis'])
+	grunt.registerTask('test', ['default', 'mochacov:test'])
+	grunt.registerTask('travis', ['test', 'mochacov:coverage'])
