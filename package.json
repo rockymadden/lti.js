@@ -24,7 +24,7 @@
 		"url": "git://github.com/rockymadden/lti.js.git"
 	},
 	"scripts": {
-		"blanket": {"pattern": ["source"]},
+		"blanket": {"pattern": ["build"]},
 		"prepublish": "grunt"
 	},
 	"version": "0.3.4"
