@@ -1,4 +1,3 @@
-config = require('../etc/toolconsumer-test.config')
 should = require('should')
 oauth = require('./oauth')
 toolconsumer = require('./toolconsumer')
@@ -8,11 +7,11 @@ describe('toolconsumer', ->
 		it('should return an option monad holding the response when passed bilby environment(s)', (done) ->
 			params = require('./toolparameters').property('resource_link_id', '0')
 			context = require('./toolcontext')
-				.property('consumerKey', config.consumerKey)
-				.property('consumerSecret', config.consumerSecret)
-				.property('host', config.host)
-				.property('path', config.path)
-				.property('port', config.port)
+				.property('consumerKey', process.env.LTIJS_CONSUMERKEY)
+				.property('consumerSecret', process.env.LTIJS_CONSUMERSECRET)
+				.property('host', process.env.LTIJS_HOST)
+				.property('path', process.env.LTIJS_PATH)
+				.property('port', process.env.LTIJS_PORT)
 
 			(toolconsumer.property('toolcontext', context)).request(params).then((response) ->
 				response.isSome.should.be.true
@@ -22,11 +21,11 @@ describe('toolconsumer', ->
 		)
 		it('should return an option monad holding the response when passed map(s)', (done) ->
 			context = require('./toolcontext')
-				.property('consumerKey', config.consumerKey)
-				.property('consumerSecret', config.consumerSecret)
-				.property('host', config.host)
-				.property('path', config.path)
-				.property('port', config.port)
+				.property('consumerKey', process.env.LTIJS_CONSUMERKEY)
+				.property('consumerSecret', process.env.LTIJS_CONSUMERSECRET)
+				.property('host', process.env.LTIJS_HOST)
+				.property('path', process.env.LTIJS_PATH)
+				.property('port', process.env.LTIJS_PORT)
 
 			(toolconsumer.property('toolcontext', context))
 				.request(
