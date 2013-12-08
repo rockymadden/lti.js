@@ -11,7 +11,7 @@ truth = bilby.environment()
 	)
 	.method('lengthy',
 		((a) -> true),
-		((a) -> @truthy(a) and a.hasOwnProperty('length') and a.length > 0?)
+		((a) -> @truthy(a) and a.hasOwnProperty('length') and a.length > 0)
 	)
 	.method('signedOAuthy',
 		((a) -> true),
