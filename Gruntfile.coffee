@@ -16,7 +16,6 @@ module.exports = (grunt) ->
 				dest: 'build/'
 				ext: '.js'
 			}]
-		copy: test: files: ['build/etc/toolconsumer-test.config.json': 'resource/test/json/etc/toolconsumer-test.config.json']
 		mochacov:
 			options:
 				files: ['build/**/*-test.js']
@@ -27,9 +26,8 @@ module.exports = (grunt) ->
 			coverage: options: coveralls: serviceName: 'travis-ci'
 
 	grunt.loadNpmTasks('grunt-contrib-coffee')
-	grunt.loadNpmTasks('grunt-contrib-copy')
 	grunt.loadNpmTasks('grunt-mocha-cov')
 
-	grunt.registerTask('default', ['coffee', 'copy'])
+	grunt.registerTask('default', ['coffee'])
 	grunt.registerTask('test', ['default', 'mochacov:test'])
 	grunt.registerTask('travis', ['test', 'mochacov:coverage'])
