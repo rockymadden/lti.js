@@ -26,5 +26,5 @@
 		"blanket": {"pattern": ["build/lib"]},
 		"prepublish": "grunt"
 	},
-	"version": "0.3.6"
+	"version": "0.3.7"
 }
