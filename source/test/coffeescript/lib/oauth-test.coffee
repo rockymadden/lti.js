@@ -32,6 +32,17 @@ describe('oauth', ->
 			oauth.sign('url', params, 'secret').should.not.be.null
 			oauth.sign('url', params, 'secret').should.equal(oauth.sign('url', params, 'secret'))
 		)
+		it('should throw upon unknown signature method', ->
+			params =
+				oauth_callback: 'about:blank'
+				oauth_consumer_key: 'oauth_consumer_key'
+				oauth_nonce: oauth.nonce()
+				oauth_signature_method: 'pandora'
+				oauth_timestamp: Date.now()
+				oauth_version: '1.0'
+
+			(-> oauth.sign('url', params, 'secret')).should.throw()
+		)
 	)
 	describe('authorization()', ->
 		it('should return an immutable environment containing all oauth parameters', ->

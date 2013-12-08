@@ -1,3 +1,4 @@
+bilby = require('bilby')
 should = require('should')
 truth = require('./truth')
 
@@ -31,5 +32,38 @@ describe('truth', ->
 		it('should return true if a non-empty string', -> truth.lengthy('non').should.be.true)
 		it('should return true if a non-empty array', -> truth.lengthy('non').should.be.true)
 		it('should return false if a non-empty object', -> truth.lengthy({non: 'non'}).should.be.false)
+	)
+	describe('environmenty()', ->
+		it('should return true when valid', -> truth.environmenty(bilby.environment()).should.be.true)
+		it('should return false when invalid', -> truth.environmenty({}).should.be.false)
+	)
+	describe('toolcontexty()', ->
+		it('should return true when valid', ->
+			context = bilby.environment()
+				.property('consumerKey', null)
+				.property('consumerSecret', null)
+				.property('utcOffset', null)
+				.property('host', null)
+				.property('path', null)
+				.property('port', null)
+
+			truth.toolcontexty(context).should.be.true
+		)
+		it('should return false when invalid', -> truth.toolcontexty({}).should.be.false)
+	)
+	describe('toolparametery()', ->
+		it('should return true when valid', ->
+			param = bilby.environment()
+				.property('lti_message_type', null)
+				.property('lti_version', null)
+				.property('resource_link_id', null)
+
+			truth.toolparametery(param).should.be.true
+		)
+		it('should return false when invalid', -> truth.toolcontexty({}).should.be.false)
+	)
+	describe('toolquerystringy()', ->
+		it('should return true when valid', -> truth.toolquerystringy(bilby.environment()).should.be.true)
+		it('should return false when invalid', -> truth.toolquerystringy({}).should.be.false)
 	)
 )
