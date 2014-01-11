@@ -19,7 +19,7 @@
 *.iml
 
 # Build ignores.
-/build
+build
 
 # Project ignores.
-/node_modules
+node_modules
