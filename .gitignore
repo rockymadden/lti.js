@@ -9,7 +9,7 @@
 *.vi
 *~
 *#
-.git/
+.git
 
 # OS ignores.
 .DS_Store
