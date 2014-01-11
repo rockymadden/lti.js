@@ -2,16 +2,16 @@ module.exports = (grunt) ->
 	grunt.initConfig
 		pkg: grunt.file.readJSON 'package.json'
 		coffee:
-			core: files: [{
+			main: files: [{
 				expand: true
-				cwd: 'source/core/coffeescript/'
+				cwd: 'src/main/coffeescript/'
 				src: ['**/*.coffee']
 				dest: 'target/'
 				ext: '.js'
 			}]
 			test: files: [{
 				expand: true
-				cwd: 'source/test/coffeescript/'
+				cwd: 'src/test/coffeescript/'
 				src: ['**/*.coffee']
 				dest: 'target/'
 				ext: '.js'
