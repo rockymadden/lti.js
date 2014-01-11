@@ -1,6 +1,6 @@
 bilby = require('bilby')
 lazy = require('lazy.js')
-truthy = require('truthy-js')
+truthy = require('truthy.js')
 
 convert = bilby.environment()
 	.method('toMap',

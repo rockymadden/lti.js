@@ -5,7 +5,7 @@ http = require('http')
 oauth = require('./oauth')
 q = require('q')
 truth = require('./truth')
-truthy = require('truthy-js')
+truthy = require('truthy.js')
 
 toolconsumer = bilby.environment()
 	.property('toolcontext', null)

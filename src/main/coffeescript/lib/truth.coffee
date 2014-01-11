@@ -1,5 +1,5 @@
 bilby = require('bilby')
-truthy = require('truthy-js')
+truthy = require('truthy.js')
 
 truth = bilby.environment()
 	.property('signedOAuthy', ((a) ->

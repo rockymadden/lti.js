@@ -3,7 +3,7 @@ convert = require('./convert')
 lazy = require('lazy.js')
 oauthsign = require('oauth-sign')
 truth = require('./truth')
-truthy = require('truthy-js')
+truthy = require('truthy.js')
 
 oauth = bilby.environment()
 	.property('nonce', (->

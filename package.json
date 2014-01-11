@@ -5,7 +5,7 @@
 		"lazy.js": "0.3.x",
 		"oauth-sign": "0.4.x",
 		"q": "0.9.x",
-		"truthy-js": "0.5.x"
+		"truthy.js": "0.5.x"
 	},
 	"description": "Functional library for interacting, via server-to-server communications, with Learning Tools Interoperability (LTI) tool providers.",
 	"devDependencies": {

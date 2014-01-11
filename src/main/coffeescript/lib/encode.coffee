@@ -2,7 +2,7 @@ bilby = require('bilby')
 convert = require('./convert')
 lazy = require('lazy.js')
 truth = require('./truth')
-truthy = require('truthy-js')
+truthy = require('truthy.js')
 
 encode = bilby.environment()
 	.method('httpAuthorizationHeader',
