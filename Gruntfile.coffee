@@ -17,17 +17,20 @@ module.exports = (grunt) ->
 				ext: '.js'
 			}]
 		mochacov:
+			coverage: options:
+				reporter: 'mocha-term-cov-reporter'
+				coverage: true
 			options:
 				files: ['target/**/*-test.js']
 				require: ['should']
 				slow: 500
 				timeout: 16000
 			test: options: reporter: 'spec'
-			coverage: options: coveralls: serviceName: 'travis-ci'
 
 	grunt.loadNpmTasks('grunt-contrib-coffee')
 	grunt.loadNpmTasks('grunt-mocha-cov')
 
-	grunt.registerTask('default', ['coffee'])
-	grunt.registerTask('test', ['default', 'mochacov:test'])
-	grunt.registerTask('travis', ['test', 'mochacov:coverage'])
+	grunt.registerTask('coverage', ['default', 'coffee:test', 'mochacov:coverage'])
+	grunt.registerTask('default', ['coffee:main'])
+	grunt.registerTask('test', ['default', 'coffee:test', 'mochacov:test'])
+	grunt.registerTask('travis', ['test'])

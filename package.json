@@ -14,11 +14,12 @@
 		"grunt-contrib-coffee": "0.7.x",
 		"grunt-mocha-cov": "0.1.x",
 		"mocha": "1.15.x",
+		"mocha-term-cov-reporter": "0.2.x",
 		"should": "2.1.x"
 	},
 	"engines": {"node": ">=0.10.0"},
 	"homepage": "http://rockymadden.com/lti.js/",
-	"keywords": ["lti", "oauth", "learning tools interoperability", "ims", "ims global", "education", "edtech"],
+	"keywords": ["lti", "learning tools interoperability", "oauth", "ims", "ims global", "education", "edtech"],
 	"main": "target/lti.js",
 	"name": "lti",
 	"repository": {"type": "git", "url": "git://github.com/rockymadden/lti.js.git"},
