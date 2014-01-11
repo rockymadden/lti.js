@@ -3,14 +3,19 @@ convert = require('./convert')
 lazy = require('lazy.js')
 oauthsign = require('oauth-sign')
 truth = require('./truth')
+truthy = require('truthy-js')
 
 oauth = bilby.environment()
-	.property('base64', '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+	.property('nonce', (->
+		base64 = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+
+		lazy([0..31]).map(-> base64[Math.floor(Math.random() * base64.length)]).toArray().join('')
+	))
 	.property('utcOffset', 0)
 	.method('authorization',
 		((url, parameters, consumerKey, consumerSecret) ->
-			truth.existy(url) and truth.existy(parameters) and
-			truth.existy(consumerKey) and truth.existy(consumerSecret)
+			truthy.bool.existy(url) and truthy.bool.existy(parameters) and
+			truthy.bool.existy(consumerKey) and truthy.bool.existy(consumerSecret)
 		),
 		((url, parameters, consumerKey, consumerSecret) ->
 			oauthParameters =
@@ -28,7 +33,7 @@ oauth = bilby.environment()
 				.property('oauth_signature', @sign(
 					url,
 					bilby.extend(
-						(if truth.environmenty(parameters) then convert.toMap(parameters) else parameters),
+						truthy.opt.environmenty(parameters).map((i) -> convert.toMap(i)).getOrElse(parameters),
 						oauthParameters
 					),
 					consumerSecret
@@ -38,24 +43,17 @@ oauth = bilby.environment()
 				.property('oauth_version', oauthParameters.oauth_version)
 		)
 	)
-	.method('nonce',
-		(-> true),
-		(->
-			self = @
-			lazy([0..31]).map(-> self.base64[Math.floor(Math.random() * self.base64.length)]).toArray().join('')
-		)
-	)
 	.method('sign',
 		((url, parameters, consumerSecret) ->
-			truth.existy(url) and truth.existy(parameters) and
-			truth.existy(consumerSecret) and truth.unsignedOAuthy(parameters)
+			truthy.bool.existy(url) and truthy.bool.existy(parameters) and
+			truthy.bool.existy(consumerSecret) and truth.unsignedOAuthy(parameters)
 		),
 		((url, parameters, consumerSecret) -> switch parameters.oauth_signature_method
 			when 'HMAC-SHA1'
 				oauthsign.hmacsign(
 					'POST',
 					url,
-					(if truth.environmenty(parameters) then convert.toMap(parameters) else parameters),
+					truthy.opt.environmenty(parameters).map((e) -> convert.toMap(e)).getOrElse(parameters),
 					consumerSecret
 				)
 			else throw 'Expected supported signature method.'

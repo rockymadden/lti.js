@@ -5,14 +5,14 @@ http = require('http')
 oauth = require('./oauth')
 q = require('q')
 truth = require('./truth')
+truthy = require('truthy-js')
 
-# Adheres to LTIv1-12.
 toolconsumer = bilby.environment()
 	.property('toolcontext', null)
 	.method('request',
 		((toolparameters, toolquerystring) ->
 			truth.toolparametery(toolparameters) and
-			(not truth.existy(toolquerystring) or truth.toolquerystringy(toolparameters))
+			(not truthy.bool.existy(toolquerystring) or truth.toolquerystringy(toolparameters))
 		),
 		((toolparameters, toolquerystring) ->
 			deferred = q.defer()
@@ -21,12 +21,12 @@ toolconsumer = bilby.environment()
 			authorization =
 				oauth.property(
 					'utcOffset',
-					if truth.existy(@toolcontext.utcOffset) then @toolcontext.utcOffset else 0
+					truthy.opt.existy(@toolcontext.utcOffset).getOrElse(0)
 				).authorization(
 					url,
 					bilby.extend(
 						toolparameters,
-						(if truth.existy(toolquerystring) then toolquerystring else {})
+						truthy.opt.existy(toolquerystring).getOrElse({})
 					),
 					@toolcontext.consumerKey,
 					@toolcontext.consumerSecret
@@ -65,17 +65,16 @@ friendlytoolconsumer = toolconsumer
 	.method('request',
 		((toolparameters, toolquerystring) ->
 			not truth.toolparametery(toolparameters) and
-			(not truth.existy(toolquerystring) or not truth.toolquerystringy(toolparameters))
+			(not truthy.bool.existy(toolquerystring) or not truth.toolquerystringy(toolparameters))
 		),
 		((toolparameters, toolquerystring) ->
-			if truth.existy(toolquerystring)
+			if truthy.bool.existy(toolquerystring)
 				bilby.bind(toolconsumer.request)(
 					@,
 					convert.toEnvironment(toolparameters),
 					convert.toEnvironment(toolquerystring)
 				)()
-			else
-				bilby.bind(toolconsumer.request)(@, convert.toEnvironment(toolparameters))()
+			else bilby.bind(toolconsumer.request)(@, convert.toEnvironment(toolparameters))()
 		)
 	)
 

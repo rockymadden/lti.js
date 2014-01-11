@@ -2,12 +2,6 @@ should = require('should')
 oauth = require('./oauth')
 
 describe('oauth', ->
-	describe('base64', ->
-		it('should exist', -> oauth.hasOwnProperty('base64').should.be.true)
-		it('should default to 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', ->
-			oauth.base64.should.equal('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
-		)
-	)
 	describe('utcOffset', ->
 		it('should exist', -> oauth.hasOwnProperty('utcOffset').should.be.true)
 		it('should default to 0', -> oauth.utcOffset.should.equal(0))

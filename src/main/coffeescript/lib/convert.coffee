@@ -1,19 +1,19 @@
 bilby = require('bilby')
 lazy = require('lazy.js')
-truth = require('./truth')
+truthy = require('truthy-js')
 
 convert = bilby.environment()
 	.method('toMap',
-		((environment) -> truth.environmenty(environment)),
+		((environment) -> truthy.bool.environmenty(environment)),
 		((environment) -> lazy(environment).omit(
 			lazy(environment)
-				.map((v, k) -> if (truth.existy(v) and typeof v is 'function') then k else null)
-				.filter((i) -> truth.existy(i))
+				.map((v, k) -> truthy.opt.functiony(v).map(-> k).getOrElse(null))
+				.filter((i) -> truthy.bool.existy(i))
 				.toArray()
 		).toObject())
 	)
 	.method('toEnvironment',
-		((map) -> truth.existy(map)),
+		((map) -> truthy.bool.existy(map)),
 		((map) ->
 			fn = (m, e) ->
 				keys = Object.keys(m)
