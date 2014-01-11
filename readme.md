@@ -1,7 +1,7 @@
-#lti.js [![Build Status](https://travis-ci.org/rockymadden/lti.js.png?branch=master)](http://travis-ci.org/rockymadden/lti.js) [![Coverage Status](https://coveralls.io/repos/rockymadden/lti.js/badge.png)](https://coveralls.io/r/rockymadden/lti.js)
+#lti.js [![Build Status](http://img.shields.io/travis-ci/rockymadden/lti.js.png)](http://travis-ci.org/rockymadden/lti.js) [![Generic](http://img.shields.io/coverage/99%25.png?color=green)]()
 Functional library for interacting, via server-to-server communications, with Learning Tools Interoperability (LTI) tool providers. The project makes heavy use of [bilby.js](https://github.com/puffnfresh/bilby.js) and [Q](https://github.com/kriskowal/q). You will likely need a familiarity with basic functional programming concepts and promises to be successful.
 
-## Depending
+## Depending Upon
 The project is available on the [Node Packaged Modules registry](https://npmjs.org/package/lti). Add the dependency in your package.json file:
 
 ```javascript
@@ -10,28 +10,24 @@ The project is available on the [Node Packaged Modules registry](https://npmjs.o
 }
 ```
 
-## Building
-```shell
-npm install
-grunt
-```
-
-## Conceptualizing
+## Concepts
 * __Tool Contexts:__ Tool contexts are immutable structures made up of the consumer key, consumer/shared secret, host, path, port (default: 443), and UTC offset (default: 0). It is unusual for contexts to change per request, but it is possible depending upon the tool provider. If new contexts are needed, create a base context. This will provide lens-like behavior in which new contexts only need to specify what is different. See [bilby.js](http://bilby.brianmckenna.org/#environment) for more information.
 * __Tool Consumers:__ Tool consumers allow you to issue one or more asynchronous requests to tool providers and handle the response(s). Responses return Q based promises. Each contains an option monad. See [Q](https://github.com/kriskowal/q) and [bilby.js](http://bilby.brianmckenna.org/#option) for more information.
 
-## Using
-__CoffeeScript:__
+## Usage (CoffeeScript)
+
+Setup tool context:
 ```coffeescript
-# Setup tool context.
 context = lti.ToolContext
 	.property('consumerKey', 'consumerKey')
 	.property('consumerSecret', 'consumerSecret')
 	.property('host', 'example.com')
 	.property('path', '/lti')
+```
 
+Create session and leverage tool consumer:
+```coffeescript
 context.withSession((consumer) ->
-	# Setup tool parameters.
 	parameters =
 		lti_version: 'LTI-1p0'
 		lti_message_type: 'basic-lti-launch-request'
@@ -45,9 +41,8 @@ context.withSession((consumer) ->
 		.done(-> console.log('All done!'))
 )
 ```
-More usage examples available via the [project unit tests](https://github.com/rockymadden/lti.js/tree/master/source/test/coffeescript).
 
-## Licensing
+## License
 ```
 The MIT License (MIT)
 
