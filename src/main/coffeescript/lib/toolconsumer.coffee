@@ -5,7 +5,6 @@ http = require('http')
 oauth = require('./oauth')
 q = require('q')
 truth = require('./truth')
-_ = require('underscore')
 
 # Adheres to LTIv1-12.
 toolconsumer = bilby.environment()

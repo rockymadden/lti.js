@@ -1,16 +1,16 @@
 bilby = require('bilby')
+lazy = require('lazy.js')
 truth = require('./truth')
-_ = require('underscore')
 
 convert = bilby.environment()
 	.method('toMap',
 		((environment) -> truth.environmenty(environment)),
-		((environment) -> _.omit(environment,
-			_.chain(environment)
+		((environment) -> lazy(environment).omit(
+			lazy(environment)
 				.map((v, k) -> if (truth.existy(v) and typeof v is 'function') then k else null)
 				.filter((i) -> truth.existy(i))
-				.value()
-		))
+				.toArray()
+		).toObject())
 	)
 	.method('toEnvironment',
 		((map) -> truth.existy(map)),

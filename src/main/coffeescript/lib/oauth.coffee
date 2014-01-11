@@ -1,8 +1,8 @@
 bilby = require('bilby')
 convert = require('./convert')
+lazy = require('lazy.js')
 oauthsign = require('oauth-sign')
 truth = require('./truth')
-_ = require('underscore')
 
 oauth = bilby.environment()
 	.property('base64', '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
@@ -42,7 +42,7 @@ oauth = bilby.environment()
 		(-> true),
 		(->
 			self = @
-			_.map([0..31], -> self.base64[Math.floor(Math.random() * self.base64.length)]).join('')
+			lazy([0..31]).map(-> self.base64[Math.floor(Math.random() * self.base64.length)]).toArray().join('')
 		)
 	)
 	.method('sign',
