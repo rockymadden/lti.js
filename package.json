@@ -19,11 +19,11 @@
 	"engines": {"node": ">=0.10.0"},
 	"homepage": "http://rockymadden.com/lti.js/",
 	"keywords": ["lti", "oauth", "learning tools interoperability", "ims", "ims global", "education", "edtech"],
-	"main": "build/lti.js",
+	"main": "target/lti.js",
 	"name": "lti",
 	"repository": {"type": "git", "url": "git://github.com/rockymadden/lti.js.git"},
 	"scripts": {
-		"blanket": {"pattern": ["build/lib"]},
+		"blanket": {"pattern": ["target/lib"]},
 		"prepublish": "grunt"
 	},
 	"version": "0.3.7"

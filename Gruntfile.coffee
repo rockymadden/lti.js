@@ -6,19 +6,19 @@ module.exports = (grunt) ->
 				expand: true
 				cwd: 'source/core/coffeescript/'
 				src: ['**/*.coffee']
-				dest: 'build/'
+				dest: 'target/'
 				ext: '.js'
 			}]
 			test: files: [{
 				expand: true
 				cwd: 'source/test/coffeescript/'
 				src: ['**/*.coffee']
-				dest: 'build/'
+				dest: 'target/'
 				ext: '.js'
 			}]
 		mochacov:
 			options:
-				files: ['build/**/*-test.js']
+				files: ['target/**/*-test.js']
 				require: ['should']
 				slow: 500
 				timeout: 16000
