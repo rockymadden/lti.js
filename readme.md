@@ -1,5 +1,10 @@
 #lti.js [![Build Status](http://img.shields.io/travis-ci/rockymadden/lti.js.png)](http://travis-ci.org/rockymadden/lti.js) [![Generic](http://img.shields.io/coverage/99%25.png?color=green)]()
-Functional library for interacting, via server-to-server communications, with Learning Tools Interoperability (LTI) tool providers. The project makes heavy use of [bilby.js](https://github.com/puffnfresh/bilby.js) and [Q](https://github.com/kriskowal/q). You will likely need a familiarity with basic functional programming concepts and promises to be successful.
+Learning Tools Interoperability (LTI) node.js library:
+
+| Functionality | v1.1      | v1.1.1     | v2.0                         |
+|---------------| --------- | ---------- | ---------------------------- |
+| Tool Consumer | Supported | Supported  | Awaiting Final Specification |
+| Tool Provider | Queued    | Queued     | Awaiting Final Specification |
 
 ## Depending Upon
 The project is available on the [Node Packaged Modules registry](https://npmjs.org/package/lti). Add the dependency in your package.json file:
@@ -10,32 +15,22 @@ The project is available on the [Node Packaged Modules registry](https://npmjs.o
 }
 ```
 
-## Concepts
-* __Tool Contexts:__ Tool contexts are immutable structures made up of the consumer key, consumer/shared secret, host, path, port (default: 443), and UTC offset (default: 0). It is unusual for contexts to change per request, but it is possible depending upon the tool provider. If new contexts are needed, create a base context. This will provide lens-like behavior in which new contexts only need to specify what is different. See [bilby.js](http://bilby.brianmckenna.org/#environment) for more information.
-* __Tool Consumers:__ Tool consumers allow you to issue one or more asynchronous requests to tool providers and handle the response(s). Responses return Q based promises. Each contains an option monad. See [Q](https://github.com/kriskowal/q) and [bilby.js](http://bilby.brianmckenna.org/#option) for more information.
-
 ## Usage (CoffeeScript)
 
-Setup tool context:
+Create a new tool consumer:
 ```coffeescript
-context = lti.ToolContext
-	.property('consumerKey', 'consumerKey')
-	.property('consumerSecret', 'consumerSecret')
-	.property('host', 'example.com')
-	.property('path', '/lti')
+consumer = new lti.ToolConsumer('example.com', '/path', 443, 'key', 'secret')
 ```
 
-Create session and leverage tool consumer:
+Leverage tool consumer:
 ```coffeescript
-context.withSession((consumer) ->
+consumer.withSession((session) ->
 	parameters =
 		lti_version: 'LTI-1p0'
 		lti_message_type: 'basic-lti-launch-request'
 		resource_link_id: '0'
 
-	# Simple one-off request. We could also make a large array of promises and asynchronously
-	# execute all of them. Check out: https://github.com/kriskowal/q/wiki/API-Reference#promiseall
-	consumer.request(parameters)
+	session.post(parameters)
 		.then((response) -> response.map((r) -> console.dir(r)))
 		.catch((error) -> console.log(error))
 		.done(-> console.log('All done!'))

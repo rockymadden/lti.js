@@ -7,7 +7,7 @@
 		"q": "0.9.x",
 		"truthy.js": "0.5.x"
 	},
-	"description": "Functional library for interacting, via server-to-server communications, with Learning Tools Interoperability (LTI) tool providers.",
+	"description": "Learning Tools Interoperability (LTI) node.js library.",
 	"devDependencies": {
 		"coffee-script": "1.6.x",
 		"grunt": "0.4.x",
@@ -20,7 +20,7 @@
 	},
 	"engines": {"node": ">=0.10.0"},
 	"homepage": "http://rockymadden.com/lti.js/",
-	"keywords": ["lti", "learning tools interoperability", "oauth", "ims", "ims global", "education", "edtech"],
+	"keywords": ["lti", "learning tools interoperability", "oauth", "education", "edtech"],
 	"main": "target/lti.js",
 	"name": "lti",
 	"repository": {"type": "git", "url": "git://github.com/rockymadden/lti.js.git"},
