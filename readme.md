@@ -15,6 +15,8 @@ The project is available on the [Node Packaged Modules registry](https://npmjs.o
 }
 ```
 
+---
+
 ## Usage (CoffeeScript)
 
 Create tool consumer:
