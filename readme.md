@@ -17,7 +17,7 @@ The project is available on the [Node Packaged Modules registry](https://npmjs.o
 
 ## Usage (CoffeeScript)
 
-Create a new tool consumer:
+Create tool consumer:
 ```coffeescript
 consumer = new lti.ToolConsumer('example.com', '/path', 443, 'key', 'secret')
 ```
