@@ -1,55 +1,37 @@
 bilby = require('bilby')
-convert = require('./convert')
 encode = require('./encode')
-http = require('http')
+lazy = require('lazy.js')
 oauth = require('./oauth')
 q = require('q')
-truth = require('./truth')
 truthy = require('truthy.js')
 
-toolconsumer = bilby.environment()
-	.property('toolcontext', null)
-	.method('request',
-		((toolparameters, toolquerystring) ->
-			truth.toolparametery(toolparameters) and
-			(not truthy.bool.existy(toolquerystring) or truth.toolquerystringy(toolparameters))
-		),
-		((toolparameters, toolquerystring) ->
+toolconsumer =
+	http:
+		post: (context, parameters, querystring) ->
 			deferred = q.defer()
 
-			url = (if @toolcontext.port is 443 then 'https://' else 'http://') + @toolcontext.host + @toolcontext.path
-			authorization =
-				oauth.property(
-					'utcOffset',
-					truthy.opt.existy(@toolcontext.utcOffset).getOrElse(0)
-				).authorization(
-					url,
-					bilby.extend(
-						toolparameters,
-						truthy.opt.existy(toolquerystring).getOrElse({})
-					),
-					@toolcontext.consumerKey,
-					@toolcontext.consumerSecret
-				)
-			# Many vendors don't seem to honor OAuth 1.0A section 5.2 bullet 1. Toss the parameters in the post data
-			# instead of the authorization header.
-			content = encode.url(bilby.extend(toolparameters, authorization))
+			authorization = oauth.authorization(
+				((if context.port is 443 then 'https://' else 'http://') + context.host + context.path),
+				lazy(parameters).extend(truthy.opt.existy(querystring).getOrElse({})).toObject(),
+				context.oauthConsumerKey,
+				context.oauthConsumerSecret,
+				context.utcOffset
+			).getOrElse({})
+			content = encode.url(lazy(parameters).extend(authorization).toObject()).getOrElse('')
 			options =
 				headers:
 					'Accept': '*/*'
 					'Connection': 'close'
 					'Content-Type': 'application/x-www-form-urlencoded'
 					'Content-Length': content.length
-					'Host': @toolcontext.host
+					'Host': context.host
 					'User-Agent': 'lti.js'
-				host: @toolcontext.host
+				host: context.host
 				method: 'POST'
-				path: @toolcontext.path +
-					if truth.toolquerystringy(toolquerystring) then '?' + encode.url(toolquerystring) else ''
-				port: @toolcontext.port
-			request = http.request(options, (response) ->
+				path: context.path + truthy.opt.lengthy(querystring).map((qs) -> '?' + encode.url(qs)).getOrElse('')
+				port: context.port
+			request = (if context.port is 443 then require('https') else require('http')).request(options, (response) ->
 				data = ''
-
 				response.on('data', (chunk) -> data += chunk)
 				response.on('end', -> deferred.resolve(bilby.some(data)))
 				response.on('error', (error) -> deferred.reject(error))
@@ -58,24 +40,29 @@ toolconsumer = bilby.environment()
 			request.end()
 
 			deferred.promise
-		)
-	)
 
-friendlytoolconsumer = toolconsumer
-	.method('request',
-		((toolparameters, toolquerystring) ->
-			not truth.toolparametery(toolparameters) and
-			(not truthy.bool.existy(toolquerystring) or not truth.toolquerystringy(toolparameters))
-		),
-		((toolparameters, toolquerystring) ->
-			if truthy.bool.existy(toolquerystring)
-				bilby.bind(toolconsumer.request)(
-					@,
-					convert.toEnvironment(toolparameters),
-					convert.toEnvironment(toolquerystring)
-				)()
-			else bilby.bind(toolconsumer.request)(@, convert.toEnvironment(toolparameters))()
-		)
-	)
+	ToolConsumer: class ToolConsumer
+		constructor: (host, path, port, oauthConsumerKey, oauthConsumerSecret, utcOffset = 0) ->
+			@host = host
+			@path = path
+			@port = port
+			@oauthConsumerKey = oauthConsumerKey
+			@oauthConsumerSecret = oauthConsumerSecret
+			@utcOffset = utcOffset
 
-module.exports = friendlytoolconsumer
+		withSession: (f) ->
+			context = Object.freeze(
+				host: @host
+				path: @path
+				port: @port
+				oauthConsumerKey: @oauthConsumerKey
+				oauthConsumerSecret: @oauthConsumerSecret
+				utcOffset: @utcOffset
+			)
+			http = Object.freeze(
+				post: bilby.bind(toolconsumer.http.post)(toolconsumer.http, context)
+			)
+
+			f(http)
+
+module.exports = Object.freeze(toolconsumer)

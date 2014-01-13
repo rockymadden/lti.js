@@ -2,19 +2,13 @@ should = require('should')
 oauth = require('./oauth')
 
 describe('oauth', ->
-	describe('utcOffset', ->
-		it('should exist', -> oauth.hasOwnProperty('utcOffset').should.be.true)
-		it('should default to 0', -> oauth.utcOffset.should.equal(0))
-	)
 	describe('nonce()', ->
-		it('should return a random 32-digit hexidecimal string', ->
-			(typeof oauth.nonce()).should.equal('string')
-			/[0-9A-Za-z]/.test(oauth.nonce()).should.be.true
-			oauth.nonce().length.should.equal(32)
+		it('should return some(random 32-digit hexidecimal string)', ->
+			/[0-9A-Za-z]{32}/.test(oauth.nonce().getOrElse(null)).should.be.true
 		)
 	)
 	describe('sign()', ->
-		it('should return a string based signature', ->
+		it('should return some(string)', ->
 			params =
 				oauth_callback: 'about:blank'
 				oauth_consumer_key: 'oauth_consumer_key'
@@ -23,10 +17,10 @@ describe('oauth', ->
 				oauth_timestamp: Date.now()
 				oauth_version: '1.0'
 
-			oauth.sign('url', params, 'secret').should.not.be.null
-			oauth.sign('url', params, 'secret').should.equal(oauth.sign('url', params, 'secret'))
+			oauth.sign('url', params, 'secret').getOrElse('one')
+				.should.equal(oauth.sign('url', params, 'secret').getOrElse('two'))
 		)
-		it('should throw upon unknown signature method', ->
+		it('should return none with unknown signature method', ->
 			params =
 				oauth_callback: 'about:blank'
 				oauth_consumer_key: 'oauth_consumer_key'
@@ -35,12 +29,13 @@ describe('oauth', ->
 				oauth_timestamp: Date.now()
 				oauth_version: '1.0'
 
-			(-> oauth.sign('url', params, 'secret')).should.throw()
+			oauth.sign('url', params, 'secret').getOrElse('none')
+				.should.equal('none')
 		)
 	)
 	describe('authorization()', ->
-		it('should return an immutable environment containing all oauth parameters', ->
-			auth = oauth.authorization('url', {}, 'key', 'secret')
+		it('should return some(object)', ->
+			auth = oauth.authorization('url', {}, 'key', 'secret').getOrElse({})
 
 			auth.hasOwnProperty('lti_version').should.be.false
 			auth.hasOwnProperty('oauth_signature').should.be.true

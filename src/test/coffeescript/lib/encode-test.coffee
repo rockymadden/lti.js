@@ -4,20 +4,22 @@ oauth = require('./oauth')
 
 describe('encode', ->
 	describe('httpAuthorizationHeader()', ->
-		it('should return a string representation of an authorization for use in an http header', ->
-			encode.httpAuthorizationHeader(
-				oauth.authorization('url', {}, 'key', 'secret')
-			).indexOf('oauth_callback="about%3Ablank",oauth_consumer_key="key",oauth_nonce="').should.equal(0)
+		it('should return some(string representation of an authorization)', ->
+			encode.httpAuthorizationHeader(oauth.authorization('url', {}, 'key', 'secret').getOrElse('')).getOrElse('')
+				.indexOf('oauth_callback="about%3Ablank",oauth_consumer_key="key",oauth_nonce="')
+				.should.equal(0)
 		)
 	)
 	describe('rfc3986()', ->
-		it('should return a RFC 3986 compatible string', ->
-			encode.rfc3986('hello there!').should.equal('hello%20there%21')
+		it('should return some(RFC 3986 compatible string)', ->
+			encode.rfc3986('hello there!').getOrElse('')
+				.should.equal('hello%20there%21')
 		)
 	)
 	describe('url()', ->
-		it('should return a string representation of a map fit for a url and post data', ->
-			encode.url(test1: 'test1', test2: 'test2').should.equal('test1=test1&test2=test2')
+		it('should return some(string representation of a map)', ->
+			encode.url(test1: 'test1', test2: 'test2').getOrElse('')
+				.should.equal('test1=test1&test2=test2')
 		)
 	)
 )
