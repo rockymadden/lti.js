@@ -22,6 +22,8 @@ Create tool consumer:
 consumer = new lti.ToolConsumer('example.com', '/path', 443, 'key', 'secret')
 ```
 
+---
+
 Leverage tool consumer:
 ```coffeescript
 consumer.withSession((session) ->
@@ -36,6 +38,8 @@ consumer.withSession((session) ->
 		.done(-> console.log('All done!'))
 )
 ```
+
+---
 
 ## License
 ```
