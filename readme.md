@@ -1,5 +1,5 @@
 #lti.js [![Build Status](http://img.shields.io/travis-ci/rockymadden/lti.js.png)](http://travis-ci.org/rockymadden/lti.js) [![Generic](http://img.shields.io/coverage/99%25.png?color=green)]()
-Learning Tools Interoperability (LTI) node.js library:
+Learning Tools Interoperability node.js library:
 
 | Functionality | v1.1      | v1.1.1     | v2.0                         |
 |---------------| --------- | ---------- | ---------------------------- |
