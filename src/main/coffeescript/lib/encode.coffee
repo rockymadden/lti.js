@@ -2,15 +2,15 @@ lazy = require('lazy.js')
 truthy = require('truthy.js')
 
 encode =
-	httpAuthorizationHeader: (authorization) -> truthy.opt.objecty(authorization).map((a) ->
-		lazy(a)
-			.map((v, k) -> k + '="' + encode.rfc3986(v.toString()).getOrElse('') + '"')
+	httpAuthorizationHeader: (a) -> truthy.opt.objecty(a).map((_) ->
+		lazy(_)
+			.map((v, k) -> k + encode.rfc3986(v.toString()).map((_) -> '="' + _ + '"').getOrElse(''))
 			.toArray()
 			.join(',')
 	)
 
-	rfc3986: (string) -> truthy.opt.stringy(string).map((s) ->
-		encodeURIComponent(s)
+	rfc3986: (s) -> truthy.opt.stringy(s).map((_) ->
+		encodeURIComponent(_)
 			.replace(/!/g, '%21')
 			.replace(/\*/g, '%2A')
 			.replace(/\(/g, '%28')
@@ -18,10 +18,11 @@ encode =
 			.replace(/'/g, '%27')
 	)
 
-	url: (map) -> truthy.opt.objecty(map).map((m) ->
-		lazy(m)
+	url: (m) -> truthy.opt.objecty(m).map((_) ->
+		lazy(_)
 			.map((v, k) ->
-				encode.rfc3986(k.toString()).getOrElse('') + '=' + encode.rfc3986(v.toString()).getOrElse('')
+				encode.rfc3986(k.toString()).getOrElse('') +
+				encode.rfc3986(v.toString()).map((_) ->  '=' + _).getOrElse('')
 			)
 			.toArray()
 			.join('&')

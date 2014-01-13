@@ -11,10 +11,10 @@ toolconsumer =
 			deferred = q.defer()
 
 			authorization = oauth.authorization(
-				((if context.port is 443 then 'https://' else 'http://') + context.host + context.path),
+				(if context.port is 443 then 'https://' else 'http://') + context.host + context.path,
 				lazy(parameters).extend(truthy.opt.existy(querystring).getOrElse({})).toObject(),
-				context.oauthConsumerKey,
-				context.oauthConsumerSecret,
+				context.key,
+				context.secret,
 				context.utcOffset
 			).getOrElse({})
 			content = encode.url(lazy(parameters).extend(authorization).toObject()).getOrElse('')
@@ -28,7 +28,7 @@ toolconsumer =
 					'User-Agent': 'lti.js'
 				host: context.host
 				method: 'POST'
-				path: context.path + truthy.opt.lengthy(querystring).map((qs) -> '?' + encode.url(qs)).getOrElse('')
+				path: context.path + truthy.opt.lengthy(querystring).map((_) -> '?' + encode.url(_)).getOrElse('')
 				port: context.port
 			request = (if context.port is 443 then require('https') else require('http')).request(options, (response) ->
 				data = ''
@@ -42,27 +42,27 @@ toolconsumer =
 			deferred.promise
 
 	ToolConsumer: class ToolConsumer
-		constructor: (host, path, port, oauthConsumerKey, oauthConsumerSecret, utcOffset = 0) ->
+		constructor: (host, path, port, key, secret, utcOffset = 0) ->
 			@host = host
 			@path = path
 			@port = port
-			@oauthConsumerKey = oauthConsumerKey
-			@oauthConsumerSecret = oauthConsumerSecret
+			@key = key
+			@secret = secret
 			@utcOffset = utcOffset
 
 		withSession: (f) ->
-			context = Object.freeze(
-				host: @host
-				path: @path
-				port: @port
-				oauthConsumerKey: @oauthConsumerKey
-				oauthConsumerSecret: @oauthConsumerSecret
-				utcOffset: @utcOffset
-			)
-			http = Object.freeze(
-				post: bilby.bind(toolconsumer.http.post)(toolconsumer.http, context)
-			)
-
-			f(http)
+			f(Object.freeze(
+				post: bilby.bind(toolconsumer.http.post)(
+					toolconsumer.http,
+					Object.freeze(
+						host: @host
+						path: @path
+						port: @port
+						key: @key
+						secret: @secret
+						utcOffset: @utcOffset
+					)
+				)
+			))
 
 module.exports = Object.freeze(toolconsumer)
