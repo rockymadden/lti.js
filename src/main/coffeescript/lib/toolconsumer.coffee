@@ -42,7 +42,7 @@ toolconsumer =
 			deferred.promise
 
 	ToolConsumer: class ToolConsumer
-		constructor: (@host, @path, @port, @key, @secret, @utcOffset = 0) ->
+		constructor: (@host, @port, @path, @key, @secret, @utcOffset = 0) ->
 
 		withSession: (f) ->
 			f(Object.freeze(
@@ -50,8 +50,8 @@ toolconsumer =
 					toolconsumer.http,
 					Object.freeze(
 						host: @host
-						path: @path
 						port: @port
+						path: @path
 						key: @key
 						secret: @secret
 						utcOffset: @utcOffset

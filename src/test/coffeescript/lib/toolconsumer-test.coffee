@@ -6,8 +6,8 @@ describe('ToolConsumer', ->
 		it('should return some', (done) ->
 			context = new toolconsumer.ToolConsumer(
 				process.env.LTIJS_HOST,
-				process.env.LTIJS_PATH,
 				process.env.LTIJS_PORT,
+				process.env.LTIJS_PATH,
 				process.env.LTIJS_CONSUMERKEY,
 				process.env.LTIJS_CONSUMERSECRET
 			)
@@ -20,10 +20,8 @@ describe('ToolConsumer', ->
 
 				session.post(parameters)
 					.then((response) ->
-						response.isSome
-							.should.be.true
-						response.getOrElse('').indexOf('Context Information:')
-							.should.be.above(-1)
+						response.isSome.should.be.true
+						response.getOrElse('').indexOf('Context Information:').should.be.above(-1)
 						done()
 					)
 			)
