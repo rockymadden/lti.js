@@ -1,4 +1,4 @@
-#lti.js [![Build Status](http://img.shields.io/travis-ci/rockymadden/lti.js.png)](http://travis-ci.org/rockymadden/lti.js) [![Generic](http://img.shields.io/coverage/99%25.png?color=green)]()
+#lti.js [![Build Status](http://img.shields.io/travis-ci/rockymadden/lti.js.png)](http://travis-ci.org/rockymadden/lti.js) [![Generic](http://img.shields.io/coverage/99%25.png?color=brightgreen)]()
 Learning Tools Interoperability node.js library:
 
 | Functionality | v1.1      | v1.1.1     | v2.0                         |
@@ -21,7 +21,7 @@ The project is available on the [Node Packaged Modules registry](https://npmjs.o
 
 Create tool consumer:
 ```coffeescript
-consumer = new lti.ToolConsumer('example.com', '/path', 443, 'key', 'secret')
+consumer = new lti.ToolConsumer('example.com', 443, '/path', 'key', 'secret')
 ```
 
 ---
