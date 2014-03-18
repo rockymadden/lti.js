@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "0.10"
 script:
-  - "grunt travis"
+  - "grunt test"
 env:
   global:
     - secure: "ALGM5ytr4iQZOt0JduSVa+C/vpdOWVwRSaU6Uxwn3GIKnpUhxyRdCb7ELSUmI/i8RQMcnAR4sAlKedy9T4WXwjX6sEKnn6OY0bmqBulc1y21yu4S7EvHgu5h+4YpneXeQVVbzEn4TYPiZXI/wJgTPlW460XyZJrXyBa0OJy0C/4="

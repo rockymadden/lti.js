@@ -33,4 +33,3 @@ module.exports = (grunt) ->
 	grunt.registerTask('coverage', ['default', 'coffee:test', 'mochacov:coverage'])
 	grunt.registerTask('default', ['coffee:main'])
 	grunt.registerTask('test', ['default', 'coffee:test', 'mochacov:test'])
-	grunt.registerTask('travis', ['test'])
