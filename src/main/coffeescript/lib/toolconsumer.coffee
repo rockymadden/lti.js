@@ -42,13 +42,7 @@ toolconsumer =
 			deferred.promise
 
 	ToolConsumer: class ToolConsumer
-		constructor: (host, path, port, key, secret, utcOffset = 0) ->
-			@host = host
-			@path = path
-			@port = port
-			@key = key
-			@secret = secret
-			@utcOffset = utcOffset
+		constructor: (@host, @path, @port, @key, @secret, @utcOffset = 0) ->
 
 		withSession: (f) ->
 			f(Object.freeze(
