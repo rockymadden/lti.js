@@ -5,9 +5,11 @@
 	},
 	"dependencies": {
 		"bilby": "0.0.x",
+		"keep-alive-agent": "0.0.x",
 		"lazy.js": "0.3.x",
 		"oauth-sign": "0.4.x",
-		"q": "1.0.x",
+		"q": "0.9.x",
+		"q-io": "1.11.x",
 		"truthy.js": "0.6.x"
 	},
 	"description": "Learning Tools Interoperability node.js library.",
@@ -19,7 +21,7 @@
 		"grunt-mocha-cov": "0.2.x",
 		"mocha": "1.18.x",
 		"mocha-term-cov-reporter": "0.2.x",
-		"should": "3.1.x"
+		"should": "3.3.x"
 	},
 	"engines": {"node": ">=0.10.0"},
 	"homepage": "http://rockymadden.com/lti.js/",

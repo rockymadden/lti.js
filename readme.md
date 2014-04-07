@@ -21,7 +21,7 @@ The project is available on the [Node Packaged Modules registry](https://npmjs.o
 
 Create tool consumer:
 ```coffeescript
-consumer = new lti.ToolConsumer('example.com', 443, '/path', 'key', 'secret')
+consumer = new lti.ToolConsumer('https://example.com/path/to/producer', 'key', 'secret')
 ```
 
 ---
@@ -29,15 +29,15 @@ consumer = new lti.ToolConsumer('example.com', 443, '/path', 'key', 'secret')
 Leverage tool consumer:
 ```coffeescript
 consumer.withSession((session) ->
-	parameters =
+	payload =
 		lti_version: 'LTI-1p0'
 		lti_message_type: 'basic-lti-launch-request'
 		resource_link_id: '0'
 
-	session.post(parameters)
-		.then((response) -> response.map((r) -> console.dir(r)))
-		.catch((error) -> console.log(error))
-		.done(-> console.log('All done!'))
+	session.basicLaunch(payload)
+		.then((r) -> r.map((_) -> console.dir(_)))
+		.catch((e) -> console.dir(e))
+		.done()
 )
 ```
 
