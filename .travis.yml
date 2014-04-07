@@ -5,9 +5,6 @@ script:
   - "grunt test"
 env:
   global:
-    - secure: "ALGM5ytr4iQZOt0JduSVa+C/vpdOWVwRSaU6Uxwn3GIKnpUhxyRdCb7ELSUmI/i8RQMcnAR4sAlKedy9T4WXwjX6sEKnn6OY0bmqBulc1y21yu4S7EvHgu5h+4YpneXeQVVbzEn4TYPiZXI/wJgTPlW460XyZJrXyBa0OJy0C/4="
-    - secure: "dmDllBuZ3xE0Wg0q+2QvcXCCaCakF1hHofaRb4EtEAmFDXf4KIBTYCuG1wO9HFm1Kh9lMdZZdB2Huk4bQOGar+KQQH+N8UyS61HlDFN1RjcJBTyUOaXo8t8h1nLvZNWwyWt6W/XxraPeUDYigigmAsC/ligxpVLrRsv6xR9rH44="
-    - secure: "orvTJ3Q12AZ2k+aI2qYHmmfakzdG7wn7zS8109P/xczjEw44uUZe1/WMC327Wp7qYZqjDIZLYV/ViP1azm5PtwScPn8R54kx/Zv04HUstVGECprSCunYUdlRuAXirzYEC8n2gzIZEZOUB7ptyvIEkUB65qxX/qiq920ndY3hBYw="
-    - secure: "HKzi6EBpXPYAKLz9qoIQLZrrSnpk0TTE2abzLYKy3yciIWVGNNBLT/9/+Nb94ITsax6sihpafPmKfZpeRzNLinhncnR/KZxQJ4htNKrpJzsJPVVuLy7M+To5ysEQ+yTGs0RsKf9efsI68X2C+jTvrUHJeX4IAPp7eeJKR15D5dc="
-    - secure: "JtThIHmoWb4S2107+67ZV5Dzo/5qyDNmWy4nJFOD+39McBVKdxBmlg2TllrSjbUFb/taRr6e/maDRXyIyj/14F0FAT1wqqKeoKpoxGafu+IRQkfBVHWhjjXc2DgjLoMfBt5CyLHbX3u8nl6kuklj++C53OAN9LvLZexJK8b1eMQ="
-    - secure: "N1Xf9bqZWbSqLP7co2jCppuWq2mzHWDsJ5eU4KA7KFpTL2IJpOkjsCxNtwSf882BJ9C4ALqvRRd4G8jOXC0dmMsZde9kY/5sUmT2mmEEUKljgxYjs3wbconwsC0+Bs2RM7Osd12+XusnNWMMNP9VT5IgoZn/yEY7xKZ/ya1Z7co="
+    - secure: "jFYnY9o6z3+223jXsas+0QYxA1M49jGokQyIOlcORN6Azu8b9eGEadMhvGESNwAU8NGNU5lwltlCNFc1i1lKhVSgtkwJYl/gUJhUhzWFXEbCleUM6qFEI3tJKfYp496t1dPMER+YrDkkBmT8kjJeCjaAksle+QRr3GK9Vb2yhGo="
+    - secure: "O2Ango5AZVC6LiKZ4y7UnmEV31gSFYYdovyVY5Hzyacn+NVY+fdeFeKzLLWgGq9ERhugCMT1ZlH4LsCiwhWdRZ93UKrz3H2x7vKWC3OknXq+5dt7gwGNXzRrnlnfirZx+7K0gmb25kUgTFMURH3ZbYoBVQ2n6LhYJChpwpFwsEg="
+    - secure: "CiRSDiunA2p0Uqosy1oxrirvynx1jdfaxOBM7lYhP6hiGhRV0Lm3MLpsFI4gf16B2T6qtI3f89WLC3sAMxTs8owNaqwEFzsa75UySHK++DcrGs+XrOlb012TrBOOR/I0IExYy/ld8OPbi4j/nZ+EUlyxEX/SKaKz67BeznvN6DA="
